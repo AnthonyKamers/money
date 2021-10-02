@@ -8,6 +8,8 @@
                     <div class="card-body">
                         I'm an example component.!!222222223333
                     </div>
+
+                    <div class="teste">teste</div>
                 </div>
             </div>
         </div>
