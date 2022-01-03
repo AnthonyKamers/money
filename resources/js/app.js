@@ -7,10 +7,17 @@ import router from './Router/index';
 import store from './Store/index';
 import App from './App.vue';
 
-import vuetify from './Plugins/vuetify';
+import axios from 'axios';
+import VueAxios from 'vue-axios';
 
+import vuetify from './Plugins/vuetify';
 require("./Mixins/globalMixin");
+
+// Set Vue router
 Vue.use(VueRouter);
+
+// Set Vue authentication
+Vue.use(VueAxios, axios);
 
 const app = new Vue({
     el: '#app',

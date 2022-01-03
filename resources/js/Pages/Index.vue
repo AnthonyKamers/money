@@ -1,10 +1,9 @@
 <template>
     <div class="index">
-        <h2>Teste</h2>
-        <h1>{{ $store.state.count }}</h1>
-        <button class="btn" @click="$store.commit('INCREMENT')">INCREMENT</button>
-        <br>
-        <router-link to="about">CLICK ME</router-link>
+        <div class="center_page">
+            <router-link to="register"><v-btn>Register</v-btn></router-link>
+            <router-link to="login"><v-btn>Login</v-btn></router-link>
+        </div>
     </div>
 </template>
 

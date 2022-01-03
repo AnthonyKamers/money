@@ -1,0 +1,8 @@
+FROM TABLE bancos
+
+id
+user_id
+nome
+agencia (nullable)
+conta   (nullable)
+saldo

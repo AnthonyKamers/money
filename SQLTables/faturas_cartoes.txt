@@ -1,0 +1,9 @@
+FROM TABLE faturas_cartoes
+
+id
+banco_id
+cartao_id
+mes_fatura
+ano_fatura
+data_vencimento
+ja_debitado (bool)

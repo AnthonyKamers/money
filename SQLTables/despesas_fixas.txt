@@ -1,0 +1,8 @@
+FROM TABLE despesas_fixas
+
+id
+banco_id
+categoria_id
+valor
+qtd_mes
+data (nullable)

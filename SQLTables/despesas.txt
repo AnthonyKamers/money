@@ -1,0 +1,13 @@
+FROM TABLE despesas
+
+id
+banco_id
+categoria_id
+forma_pagamento_id
+cartao_id
+descricao
+valor
+data (da despesa, caso seja cartão de crédito)
+ja_debitado (bool, nullable)
+
+qtd_vezes (boleto, cartão de crédito)

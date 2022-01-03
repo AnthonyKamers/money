@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -15,6 +17,7 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users',
             'password'  => 'required|min:3|confirmed',
         ]);
+
         if ($v->fails())
         {
             return response()->json([
@@ -22,9 +25,11 @@ class AuthController extends Controller
                 'errors' => $v->errors()
             ], 422);
         }
+
         $user = new User;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        $user->password = Hash::make($request->password);
+        $user->api_token = Str::random(60);
         $user->save();
         return response()->json(['status' => 'success'], 200);
     }
@@ -33,14 +38,21 @@ class AuthController extends Controller
     {
         $credentials = $request->only('email', 'password');
         if ($token = $this->guard()->attempt($credentials)) {
-            return response()->json(['status' => 'success'], 200)->header('Authorization', $token);
+            $response = [
+                "status" => 'success',
+                "token" => $token
+            ];
+
+            return response()->json($response, 200)->header('Authorization', $token);
         }
+
         return response()->json(['error' => 'login_error'], 401);
     }
 
     public function logout()
     {
         $this->guard()->logout();
+
         return response()->json([
             'status' => 'success',
             'msg' => 'Logged out Successfully.'
@@ -49,10 +61,9 @@ class AuthController extends Controller
 
     public function user(Request $request)
     {
-        $user = User::find(Auth::user()->id);
         return response()->json([
             'status' => 'success',
-            'data' => $user
+            'data' => Auth::user()
         ]);
     }
     

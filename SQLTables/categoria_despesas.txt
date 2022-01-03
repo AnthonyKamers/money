@@ -1,0 +1,6 @@
+FROM TABLE categoria_despesas
+
+id
+banco_id
+nome
+cor

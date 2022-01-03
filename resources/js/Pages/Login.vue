@@ -1,20 +1,20 @@
 <template>
     <div>
         <div class="center_page">
-            <h1>Admin - Águia imóveis</h1>
+            <h1>Login - Money</h1>
 
             <div class="padding_control">
                 <v-form ref="form" lazy-validation>
                     <v-text-field
-                        v-model="login"
-                        label="Login"
+                        v-model="email"
+                        label="Email"
                         :rules="ruleRequired"
                         required
                         outlined
                     ></v-text-field>
 
                     <v-text-field
-                        v-model="senha"
+                        v-model="password"
                         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                         :type="show1 ? 'text' : 'password'"
                         name="input-10-1"
@@ -35,12 +35,12 @@
 
 <script>
 export default {
-    name: "Admin",
+    name: "Login",
 
     data() {
         return {
-            login: "",
-            senha: "",
+            email: "",
+            password: "",
             show1: false
         }
     },
@@ -48,7 +48,26 @@ export default {
     methods: {
         enter() {
             if (this.$refs.form.validate()) {
-                alert("it is valid")
+                const data = {
+                    email: this.email,
+                    password: this.password
+                }
+
+                this.axios.post(`${this.apiUrl}/auth/login`, data).then(
+                    response => {
+                        const responseData = response.data
+
+                        if (responseData.status == "success") {
+                            this.axios.defaults.headers.common["Authorization"] = `Bearer ${responseData.token}`;
+                            localStorage.token = responseData.token;
+
+                            this.$router.push({path: "/dashboard"});
+                        }
+                    },
+                    error => {
+                        console.log(error);
+                    }
+                )
             } else {
                 alert('is is not valid')
             }
@@ -59,15 +78,6 @@ export default {
 
 
 <style scoped>
-.center_page {
-  margin: auto;
-  width: 50%;
-  border: 3px solid #c8c8c8;
-  padding: 10px;
-  margin-top: 15%;
-  text-align: center;
-}
-
 .padding_control {
     padding: 0 120px;
 }

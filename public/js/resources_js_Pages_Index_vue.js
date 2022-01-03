@@ -20,7 +20,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Index"
 });
@@ -111,33 +110,28 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "index" },
-    [
-      _c("h2", [_vm._v("Teste")]),
-      _vm._v(" "),
-      _c("h1", [_vm._v(_vm._s(_vm.$store.state.count))]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn",
-          on: {
-            click: function($event) {
-              return _vm.$store.commit("INCREMENT")
-            }
-          }
-        },
-        [_vm._v("INCREMENT")]
-      ),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _c("router-link", { attrs: { to: "about" } }, [_vm._v("CLICK ME")])
-    ],
-    1
-  )
+  return _c("div", { staticClass: "index" }, [
+    _c(
+      "div",
+      { staticClass: "center_page" },
+      [
+        _c(
+          "router-link",
+          { attrs: { to: "register" } },
+          [_c("v-btn", [_vm._v("Register")])],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "router-link",
+          { attrs: { to: "login" } },
+          [_c("v-btn", [_vm._v("Login")])],
+          1
+        )
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

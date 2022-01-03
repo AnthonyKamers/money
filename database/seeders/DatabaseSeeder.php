@@ -17,8 +17,8 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         \App\Models\User::create([
-            'name' => 'aguiaimoveis',
-            'password' => Hash::make('05112014bf'),
+            'email' => 'admin@admin.com',
+            'password' => Hash::make('admin'),
             'api_token' => Str::random(60),
         ]);
     }

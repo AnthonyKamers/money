@@ -1,24 +1,22 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
+import Vue from "vue";
+import Vuex from "vuex";
+import createLogger from "vuex/dist/logger";
+import { createStore } from "vuex-extensions";
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
-    state: {
-        count: 0
-    },
+const debug = process.env.NODE_ENV !== "production";
+const plugins = [];
 
-    getters: {
+if (debug) {
+  plugins.push(createLogger()); // set logger only for development
+}
 
-    },
+// import the auto exporter
+import modules from "./modules";
 
-    actions: {},
-
-    mutations: {
-        INCREMENT(state) {
-            state.count++
-        }
-    }
+export default createStore(Vuex.Store, {
+  modules: modules,
+  plugins: plugins,
+  strict: debug
 });
-
-export default store;

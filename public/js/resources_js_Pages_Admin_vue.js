@@ -220,7 +220,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "center_page" }, [
-      _c("h1", [_vm._v("Admin - Águia imóveis")]),
+      _c("h1", [_vm._v("Admin - Money")]),
       _vm._v(" "),
       _c(
         "div",

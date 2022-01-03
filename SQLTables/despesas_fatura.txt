@@ -1,0 +1,8 @@
+FROM TABLE despesas_fatura
+
+id
+cartao_id
+fatura_id
+despesa_id
+qtd_vezes_now
+valor_parcela

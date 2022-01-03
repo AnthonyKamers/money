@@ -1,0 +1,6 @@
+FROM TABLE categoria_rendas
+
+id
+banco_id
+nome
+cor

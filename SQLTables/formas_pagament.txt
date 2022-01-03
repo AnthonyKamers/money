@@ -1,0 +1,4 @@
+FROM TABLE formas_pagamento
+
+id
+descricao

@@ -1,0 +1,9 @@
+FROM TABLE rendas
+
+id
+banco_id
+categoria_id
+descricao
+valor
+data
+ja_em_conta (bool)
