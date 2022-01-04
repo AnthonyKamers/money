@@ -27,4 +27,13 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::get('bancos/read', [BancoController::class, 'index']);
+Route::group(['middleware' => 'auth:api'], function() {
+    // CRUD bancos
+    Route::post('bancos/create', [BancoController::class, 'store']);
+    Route::get('bancos/read', [BancoController::class, 'index']);
+    Route::post('bancos/update', [BancoController::class, 'update']);
+    Route::post('bancos/delete', [BancoController::class, 'destroy']);
+
+    // CRUD cartoes
+    Route::get('cartoes/read', [CartaoController::class, 'index']);
+});

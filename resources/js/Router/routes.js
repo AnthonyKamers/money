@@ -37,6 +37,7 @@ const routes = [
             requiresAuth: true,
         },
         children: [
+            // cadastro bancos
             {
                 path: '/bancos',
                 name: "Bancos",
@@ -51,6 +52,33 @@ const routes = [
                 component: () => import("../Pages/Bancos/CadastrarBanco.vue"),
                 meta: {
                     title: "Cadastrar banco"
+                }
+            },
+            {
+                path: "/editar-banco",
+                name: "Bancos.editar",
+                component: () => import("../Pages/Bancos/CadastrarBanco.vue"),
+                meta: {
+                    title: "Editar banco"
+                }
+            },
+
+            // ações bancos
+            // cartões
+            {
+                path: '/banco/:banco_id/cartoes',
+                name: "Bancos.cartoes",
+                component: () => import("../Pages/Bancos/Acoes/Cartoes/Cartoes.vue"),
+                meta: {
+                    title: "Cartões banco"
+                }
+            },
+            {
+                path: '/banco/:banco_id/cadastrar-cartao',
+                name: "Bancos.cartoes.cadastrar",
+                component: () => import("../Pages/Bancos/Acoes/Cartoes/CadastrarCartao.vue"),
+                meta: {
+                    title: "Cadastrar cartão banco"
                 }
             }
         ]

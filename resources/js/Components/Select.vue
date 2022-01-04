@@ -1,20 +1,27 @@
 <template>
     <v-col :cols="cols">
-        <v-text-field
+        <v-select
             v-model="model"
             :label="label"
+            :items="items"
+            :selected="value"
             :rules="rules"
+            item-text="key"
+            item-value="value"
             outlined
-        ></v-text-field>
+        ></v-select>
     </v-col>
 </template>
 
 <script>
 export default {
-    name: "Input",
+    name: "Select",
 
     props: {
         label: {
+            required: true
+        },
+        items: {
             required: true
         },
         value: {

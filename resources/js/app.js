@@ -16,7 +16,8 @@ require("./Mixins/globalMixin");
 // Set Vue router
 Vue.use(VueRouter);
 
-// Set Vue authentication
+// Set Vue axios
+axios.defaults.headers.common["Authorization"] = "Bearer " + localStorage.token;
 Vue.use(VueAxios, axios);
 
 const app = new Vue({

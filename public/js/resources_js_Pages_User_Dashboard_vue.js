@@ -44,19 +44,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Menu",
+  created: function created() {
+    this.$store.dispatch("Bancos/readBancos", this.$root);
+  },
   data: function data() {
-    return {// menu: [
-      //   ["Cadastrar",["Bancos", "Corretoras", "Exchanges", "Wallets"]],
-      //   ["Bancos", ["Cartões", ["Rendas", ["Categorias", "Rendas fixas", "Cadastrar renda"]]]]
-      // ]
-    };
+    return {};
   },
   methods: {
     logout: function logout() {
+      var _this = this;
+
       this.axios.post("".concat(this.apiUrl, "/auth/logout")).then(function (response) {
-        console.log(response);
+        if (response.data.status === "success") {
+          _this.$router.push({
+            path: "/login"
+          });
+        }
       }, function (error) {
         console.log(error);
       });
@@ -89,21 +97,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Dashboard",
-  created: function created() {
-    console.log(localStorage.token);
-    this.axios.get("".concat(this.apiUrl, "/auth/user"), {
-      headers: {
-        "Authorization": "Bearer ".concat(localStorage.token)
-      }
-    }).then(function (response) {
-      console.log(response);
-    }, function (error) {
-      console.log(error);
-    });
-  },
   components: {
     Menu: _Components_Menu__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -127,7 +125,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.menu[data-v-6b52e6ac] {\n    width: 300px;\n    border: 1px solid #a8a8a8;\n\tmargin-right: 10px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.menu[data-v-6b52e6ac] {\n    width: 300px;\n    border: 1px solid #a8a8a8;\n\tmargin-right: 10px;\n}\n.link[data-v-6b52e6ac] {\n\tfont-size: 16px;\n\tcolor: #90CAF9;\n\tcursor: pointer;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -409,7 +407,46 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _vm.$store.getters["Bancos/getBancos"]
+        ? _c(
+            "div",
+            _vm._l(_vm.$store.getters["Bancos/getBancos"], function(banco) {
+              return _c("ul", { key: banco.id }, [
+                _c("h4", { staticStyle: { "margin-bottom": "0" } }, [
+                  _vm._v(_vm._s(banco.nome))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  {
+                    staticClass: "link",
+                    on: {
+                      click: function($event) {
+                        return _vm.$router.push({
+                          path: "/banco/" + banco.id + "/cartoes"
+                        })
+                      }
+                    }
+                  },
+                  [_vm._v("Cartões")]
+                ),
+                _vm._v(" "),
+                _c("li", [_vm._v("Rendas (entradas)")]),
+                _vm._v(" "),
+                _vm._m(0, true),
+                _vm._v(" "),
+                _c("li", [_vm._v("Despesas (saídas)")]),
+                _vm._v(" "),
+                _vm._m(1, true),
+                _vm._v(" "),
+                _c("li", [_vm._v("Extrato")]),
+                _vm._v(" "),
+                _c("li", [_vm._v("Saldo")])
+              ])
+            }),
+            0
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c("v-btn", { staticClass: "secondary", on: { click: _vm.logout } }, [
         _vm._v("Logout")
@@ -424,36 +461,27 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("ul", [
-      _vm._v("Bancos\n\t\t"),
-      _c("li", [_vm._v("Cartões")]),
+      _c("li", [_vm._v("Categorias")]),
       _vm._v(" "),
-      _c("li", [_vm._v("Rendas (entradas)")]),
+      _c("li", [_vm._v("Rendas fixas")]),
       _vm._v(" "),
-      _c("ul", [
-        _c("li", [_vm._v("Categorias")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Rendas fixas")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Cadastrar renda")])
-      ]),
+      _c("li", [_vm._v("Cadastrar renda")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("ul", [
+      _c("li", [_vm._v("Categorias")]),
       _vm._v(" "),
-      _c("li", [_vm._v("Despesas (saídas)")]),
+      _c("li", [_vm._v("Despesas fixas")]),
       _vm._v(" "),
-      _c("ul", [
-        _c("li", [_vm._v("Categorias")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Despesas fixas")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Faturas cartões")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Parcelas à pagar")]),
-        _vm._v(" "),
-        _c("li", [_vm._v("Despesas")])
-      ]),
+      _c("li", [_vm._v("Faturas cartões")]),
       _vm._v(" "),
-      _c("li", [_vm._v("Extrato")]),
+      _c("li", [_vm._v("Parcelas à pagar")]),
       _vm._v(" "),
-      _c("li", [_vm._v("Saldo")])
+      _c("li", [_vm._v("Despesas")])
     ])
   }
 ]
@@ -479,12 +507,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "body" }, [
-    _c("h1", [_vm._v("Dashboard user")]),
+    _c(
+      "h1",
+      [
+        _c("router-link", { attrs: { to: "/dashboard" } }, [
+          _vm._v("Dashboard")
+        ])
+      ],
+      1
+    ),
     _vm._v(" "),
     _c(
       "div",
       { staticClass: "flex" },
-      [_c("Menu"), _vm._v(" "), _c("router-view")],
+      [
+        _c("Menu"),
+        _vm._v(" "),
+        _c("div", { staticClass: "fullWidth" }, [_c("router-view")], 1)
+      ],
       1
     )
   ])

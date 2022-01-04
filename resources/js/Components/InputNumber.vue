@@ -4,6 +4,10 @@
             v-model="model"
             :label="label"
             :rules="rules"
+            :min="min"
+            :max="max"
+            :step="stepInt ? 1 : 0.1"
+            type="number"
             outlined
         ></v-text-field>
     </v-col>
@@ -16,6 +20,15 @@ export default {
     props: {
         label: {
             required: true
+        },
+        min: {
+            required: true
+        },
+        max: {
+            required: true
+        },
+        stepInt: {
+            required: false
         },
         value: {
             required: false

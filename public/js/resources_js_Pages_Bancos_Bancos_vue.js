@@ -41,13 +41,119 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Bancos",
   created: function created() {
     this.$store.dispatch("Bancos/readBancos", this.$root);
   },
   data: function data() {
-    return {};
+    return {
+      bancoDelete: {},
+      dialogDelete: false,
+      snackbar: false,
+      textSnackbar: ""
+    };
+  },
+  methods: {
+    editarBanco: function editarBanco(banco) {
+      this.$store.dispatch("Bancos/setEditBanco", banco);
+      this.$router.push({
+        path: "/editar-banco"
+      });
+    },
+    deleteBanco: function deleteBanco(banco) {
+      this.bancoDelete = banco;
+      this.dialogDelete = true;
+    },
+    fecharDelete: function fecharDelete() {
+      this.dialogDelete = false;
+      this.bancoDelete = {};
+    },
+    deletar: function deletar() {
+      var _this = this;
+
+      var data = {
+        instance: this.$root,
+        data: this.bancoDelete
+      };
+      this.$store.dispatch("Bancos/deleteBanco", data).then(function (response) {
+        if (_this.$store.getters["Banco/getApi"] === "success") {
+          _this.dialogDelete = false;
+          _this.bancoDelete = {};
+          _this.$textSnackbar = "Banco deletado com sucesso";
+          _this.snackbar = true;
+        } else {
+          _this.dialogDelete = false;
+          _this.bancoDelete = {};
+          _this.textSnackbar = response;
+          _this.snackbar = true;
+        }
+      }, function (error) {
+        _this.textSnackbar = error;
+        _this.snackbar = true;
+      });
+    }
   }
 });
 
@@ -140,6 +246,19 @@ var render = function() {
   return _c(
     "div",
     [
+      _c(
+        "v-icon",
+        {
+          staticClass: "floatRight",
+          on: {
+            click: function($event) {
+              return _vm.$router.go(-1)
+            }
+          }
+        },
+        [_vm._v("mdi-arrow-left")]
+      ),
+      _vm._v(" "),
       _c("h1", [_vm._v("Bancos")]),
       _vm._v(" "),
       _c(
@@ -163,24 +282,56 @@ var render = function() {
                     _vm._v(" "),
                     _c("th", { staticClass: "text-left" }, [_vm._v("Conta")]),
                     _vm._v(" "),
-                    _c("th", { staticClass: "text-left" }, [_vm._v("Saldo")])
+                    _c("th", { staticClass: "text-left" }, [_vm._v("Saldo")]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-left" }, [_vm._v("Ações")])
                   ])
                 ]),
                 _vm._v(" "),
                 _c(
                   "tbody",
                   _vm._l(_vm.$store.getters["Bancos/getBancos"], function(
-                    item,
+                    banco,
                     id
                   ) {
                     return _c("tr", { key: id }, [
-                      _c("td", [_vm._v(_vm._s(item.nome))]),
+                      _c("td", [_vm._v(_vm._s(banco.nome))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.agencia))]),
+                      _c("td", [_vm._v(_vm._s(banco.agencia))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.conta))]),
+                      _c("td", [_vm._v(_vm._s(banco.conta))]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(item.saldo))])
+                      _c("td", [_vm._v(_vm._s(banco.saldo))]),
+                      _vm._v(" "),
+                      _c(
+                        "td",
+                        [
+                          _c(
+                            "v-icon",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.editarBanco(banco)
+                                }
+                              }
+                            },
+                            [_vm._v("mdi-pencil")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "v-icon",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.deleteBanco(banco)
+                                }
+                              }
+                            },
+                            [_vm._v("mdi-delete")]
+                          )
+                        ],
+                        1
+                      )
                     ])
                   }),
                   0
@@ -190,7 +341,120 @@ var render = function() {
             proxy: true
           }
         ])
-      })
+      }),
+      _vm._v(" "),
+      _c(
+        "v-dialog",
+        {
+          attrs: { persistent: "", "max-width": "550" },
+          model: {
+            value: _vm.dialogDelete,
+            callback: function($$v) {
+              _vm.dialogDelete = $$v
+            },
+            expression: "dialogDelete"
+          }
+        },
+        [
+          _c(
+            "v-card",
+            [
+              _c("v-card-title", { staticClass: "text-h5" }, [
+                _vm._v(
+                  "\n            Deseja realmente deletar o banco " +
+                    _vm._s(_vm.bancoDelete.nome) +
+                    "?\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c("v-card-text", [
+                _vm._v(
+                  "\n                Após deletar este banco, todas as transações efetuadas por ele, serão deletadas também!!\n                "
+                ),
+                _c("br"),
+                _vm._v(
+                  "\n                Tenha muito cuidado com essa ação!\n            "
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "v-card-actions",
+                [
+                  _c("v-spacer"),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: { color: "blue darken-1", text: "" },
+                      on: { click: _vm.fecharDelete }
+                    },
+                    [_vm._v("\n                    Fechar\n                ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "v-btn",
+                    {
+                      attrs: {
+                        color: "red darken-1",
+                        text: "",
+                        loading:
+                          _vm.$store.getters["Bancos/getApi"] == "pending"
+                      },
+                      on: { click: _vm.deletar }
+                    },
+                    [_vm._v("\n                    Deletar\n                ")]
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "v-snackbar",
+        {
+          attrs: { color: _vm.$store.getters["Bancos/getApi"] },
+          scopedSlots: _vm._u([
+            {
+              key: "action",
+              fn: function(ref) {
+                var attrs = ref.attrs
+                return [
+                  _c(
+                    "v-btn",
+                    _vm._b(
+                      {
+                        attrs: { color: "white", text: "" },
+                        on: {
+                          click: function($event) {
+                            _vm.snackbar = false
+                          }
+                        }
+                      },
+                      "v-btn",
+                      attrs,
+                      false
+                    ),
+                    [_vm._v("\n            Fechar\n            ")]
+                  )
+                ]
+              }
+            }
+          ]),
+          model: {
+            value: _vm.snackbar,
+            callback: function($$v) {
+              _vm.snackbar = $$v
+            },
+            expression: "snackbar"
+          }
+        },
+        [_vm._v("\n        " + _vm._s(_vm.textSnackbar) + "\n\n        ")]
+      )
     ],
     1
   )

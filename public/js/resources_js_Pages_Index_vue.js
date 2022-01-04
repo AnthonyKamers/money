@@ -118,14 +118,18 @@ var render = function() {
         _c(
           "router-link",
           { attrs: { to: "register" } },
-          [_c("v-btn", [_vm._v("Register")])],
+          [
+            _c("v-btn", { attrs: { color: "primary" } }, [
+              _vm._v("Registrar-se")
+            ])
+          ],
           1
         ),
         _vm._v(" "),
         _c(
           "router-link",
           { attrs: { to: "login" } },
-          [_c("v-btn", [_vm._v("Login")])],
+          [_c("v-btn", { attrs: { color: "secondary" } }, [_vm._v("Login")])],
           1
         )
       ],

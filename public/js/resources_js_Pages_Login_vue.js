@@ -68,8 +68,8 @@ __webpack_require__.r(__webpack_exports__);
           var responseData = response.data;
 
           if (responseData.status == "success") {
-            _this.axios.defaults.headers.common["Authorization"] = "Bearer ".concat(responseData.token);
             localStorage.token = responseData.token;
+            _this.axios.defaults.headers.common["Authorization"] = "Bearer ".concat(responseData.token);
 
             _this.$router.push({
               path: "/dashboard"

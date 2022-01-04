@@ -1,12 +1,28 @@
-.center_page {
-    margin: auto;
-    width: 50%;
-    border: 3px solid #c8c8c8;
-    padding: 10px;
-    margin-top: 15%;
-    text-align: center;
-  }
+a:hover {
+  text-decoration: none;
+}
 
-  .center {
-    text-align: center;
-  }
+.center_page {
+  margin: auto;
+  width: 50%;
+  border: 3px solid #c8c8c8;
+  padding: 10px;
+  margin-top: 15%;
+  text-align: center;
+}
+
+.center {
+  text-align: center;
+}
+
+.floatRight {
+  float: right;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.relative {
+  position: relative;
+}

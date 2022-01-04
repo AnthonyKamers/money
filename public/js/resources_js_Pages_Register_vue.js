@@ -22,14 +22,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Input",
   props: {
     label: {
       required: true
     },
+    value: {
+      required: false
+    },
     rules: {
+      required: false
+    },
+    cols: {
       required: false
     }
   },
@@ -38,9 +43,19 @@ __webpack_require__.r(__webpack_exports__);
       model: ""
     };
   },
+  methods: {
+    attributeValue: function attributeValue() {
+      if (this.value !== undefined) {
+        this.model = this.value;
+      }
+    }
+  },
   watch: {
     model: function model(val) {
       this.$emit("update", val);
+    },
+    value: function value(val) {
+      this.attributeValue();
     }
   }
 });
@@ -280,14 +295,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-col",
+    { attrs: { cols: _vm.cols } },
     [
       _c("v-text-field", {
-        attrs: {
-          label: _vm.label,
-          rules: _vm.rules,
-          required: "",
-          outlined: ""
-        },
+        attrs: { label: _vm.label, rules: _vm.rules, outlined: "" },
         model: {
           value: _vm.model,
           callback: function($$v) {

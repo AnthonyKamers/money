@@ -58,8 +58,8 @@ export default {
                         const responseData = response.data
 
                         if (responseData.status == "success") {
-                            this.axios.defaults.headers.common["Authorization"] = `Bearer ${responseData.token}`;
                             localStorage.token = responseData.token;
+                            this.axios.defaults.headers.common["Authorization"] = `Bearer ${responseData.token}`;
 
                             this.$router.push({path: "/dashboard"});
                         }

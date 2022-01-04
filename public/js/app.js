@@ -2095,7 +2095,8 @@ vue__WEBPACK_IMPORTED_MODULE_0__["default"].mixin({
       ruleRequired: [function (v) {
         return !!v || 'Necessário preenchimento';
       }],
-      apiUrl: "http://money.local:8000/api"
+      apiUrl: "http://money.local:8000/api",
+      colors: ["#F44336", "#E91E63", "#9C27B0", "#2196F3", "#00BCD4", "#4CAF50", "#FFC107", "#FF9800", "#795548", "#607D8B", "#9E9E9E", "#000000", "#FFFFFF"]
     };
   }
 });
@@ -2226,7 +2227,8 @@ var routes = [{
     title: 'Dashboard',
     requiresAuth: true
   },
-  children: [{
+  children: [// cadastro bancos
+  {
     path: '/bancos',
     name: "Bancos",
     component: function component() {
@@ -2243,6 +2245,35 @@ var routes = [{
     },
     meta: {
       title: "Cadastrar banco"
+    }
+  }, {
+    path: "/editar-banco",
+    name: "Bancos.editar",
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_Pages_Bancos_CadastrarBanco_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Bancos/CadastrarBanco.vue */ "./resources/js/Pages/Bancos/CadastrarBanco.vue"));
+    },
+    meta: {
+      title: "Editar banco"
+    }
+  }, // ações bancos
+  // cartões
+  {
+    path: '/banco/:banco_id/cartoes',
+    name: "Bancos.cartoes",
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_Pages_Bancos_Acoes_Cartoes_Cartoes_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Bancos/Acoes/Cartoes/Cartoes.vue */ "./resources/js/Pages/Bancos/Acoes/Cartoes/Cartoes.vue"));
+    },
+    meta: {
+      title: "Cartões banco"
+    }
+  }, {
+    path: '/banco/:banco_id/cadastrar-cartao',
+    name: "Bancos.cartoes.cadastrar",
+    component: function component() {
+      return __webpack_require__.e(/*! import() */ "resources_js_Pages_Bancos_Acoes_Cartoes_CadastrarCartao_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../Pages/Bancos/Acoes/Cartoes/CadastrarCartao.vue */ "./resources/js/Pages/Bancos/Acoes/Cartoes/CadastrarCartao.vue"));
+    },
+    meta: {
+      title: "Cadastrar cartão banco"
     }
   }]
 }];
@@ -2302,24 +2333,170 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var state = {
   bancos: null,
-  apiBancos: "success"
+  apiBanco: "success",
+  editBanco: null
 };
 var getters = {
   getBancos: function getBancos(state) {
     return state.bancos;
+  },
+  getApi: function getApi(state) {
+    return state.apiBanco;
+  },
+  getEditBanco: function getEditBanco(state) {
+    return state.editBanco;
   }
 };
 var actions = {
   readBancos: function readBancos(_ref, instance) {
     var commit = _ref.commit;
-    instance.axios.get("".concat(instance.apiUrl, "/bancos/read")).then(function (response) {
-      commit("SET_BANCOS", response.data);
+    return new Promise(function (resolve, reject) {
+      instance.axios.get("".concat(instance.apiUrl, "/bancos/read")).then(function (response) {
+        commit("SET_BANCOS", response.data);
+        resolve();
+      }, function (error) {
+        console.log(error);
+        reject();
+      });
+    });
+  },
+  createBanco: function createBanco(_ref2, payload) {
+    var commit = _ref2.commit,
+        dispatch = _ref2.dispatch;
+    return new Promise(function (resolve, reject) {
+      commit("SET_API", "pending");
+      payload.instance.axios.post("".concat(payload.instance.apiUrl, "/bancos/create"), payload.data).then(function (response) {
+        if (response.data == "success") {
+          dispatch("readBancos", payload.instance);
+          commit("SET_API", "success");
+          resolve(response.data);
+        } else {
+          commit("SET_API", "error");
+          reject(response.data);
+        }
+      }, function (error) {
+        commit("SET_API", "error");
+        reject(error);
+      });
+    });
+  },
+  setEditBanco: function setEditBanco(_ref3, banco) {
+    var commit = _ref3.commit;
+    commit("SET_EDIT_BANCO", banco);
+  },
+  editBanco: function editBanco(_ref4, payload) {
+    var commit = _ref4.commit,
+        dispatch = _ref4.dispatch;
+    return new Promise(function (resolve, reject) {
+      commit("SET_API", "pending");
+      payload.instance.axios.post("".concat(payload.instance.apiUrl, "/bancos/update"), payload.data).then(function (response) {
+        if (response.data == "success") {
+          dispatch("readBancos", payload.instance);
+          commit("SET_API", "success");
+          commit("SET_EDIT_BANCO", null);
+          resolve(response.data);
+        } else {
+          commit("SET_API", "error");
+          reject(response.data);
+        }
+      }, function (error) {
+        commit("SET_API", "error");
+        reject(error);
+      });
+    });
+  },
+  deleteBanco: function deleteBanco(_ref5, payload) {
+    var commit = _ref5.commit,
+        dispatch = _ref5.dispatch;
+    return new Promise(function (resolve, reject) {
+      commit("SET_API", "pending");
+      payload.instance.axios.post("".concat(payload.instance.apiUrl, "/bancos/delete"), payload.data).then(function (response) {
+        if (response.data == "success") {
+          dispatch("readBancos", payload.instance);
+          commit("SET_API", "success");
+          resolve(response.data);
+        } else {
+          commit("SET_API", "error");
+          reject(response.data);
+        }
+      }, function (error) {
+        commit("SET_API", "error");
+        reject(error);
+      });
     });
   }
 };
 var mutations = {
   SET_BANCOS: function SET_BANCOS(state, value) {
     state.bancos = value;
+  },
+  SET_API: function SET_API(state, value) {
+    state.apiBanco = value;
+  },
+  SET_EDIT_BANCO: function SET_EDIT_BANCO(state, value) {
+    state.editBanco = value;
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  namespaced: true,
+  state: state,
+  getters: getters,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/Store/modules/cartoes.store.js":
+/*!*****************************************************!*\
+  !*** ./resources/js/Store/modules/cartoes.store.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+var state = {
+  cartoes: null,
+  apiCartoes: 'success',
+  editCartao: null
+};
+var getters = {
+  getCartoes: function getCartoes(state) {
+    return state.cartoes;
+  },
+  getApi: function getApi(state) {
+    return state.apiCartoes;
+  },
+  getEditCartao: function getEditCartao(state) {
+    return state.editCartao;
+  }
+};
+var actions = {
+  readCartoes: function readCartoes(_ref, instance) {
+    var commit = _ref.commit;
+    return new Promise(function (resolve, reject) {
+      instance.axios.get("".concat(instance.apiUrl, "/cartoes/read")).then(function (response) {
+        commit("SET_CARTOES", response.data);
+        resolve();
+      }, function (error) {
+        console.log(error);
+        reject();
+      });
+    });
+  }
+};
+var mutations = {
+  SET_CARTOES: function SET_CARTOES(state, value) {
+    state.cartoes = value;
+  },
+  SET_API: function SET_API(state, value) {
+    state.apiCartoes = value;
+  },
+  SET_EDIT_CARTAO: function SET_EDIT_CARTAO(state, value) {
+    state.editCartao = value;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2424,8 +2601,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__(/*! ./Mixins/globalMixin */ "./resources/js/Mixins/globalMixin.js"); // Set Vue router
 
 
-vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]); // Set Vue authentication
+vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_7__["default"]); // Set Vue axios
 
+(axios__WEBPACK_IMPORTED_MODULE_3___default().defaults.headers.common.Authorization) = "Bearer " + localStorage.token;
 vue__WEBPACK_IMPORTED_MODULE_6__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_4__["default"], (axios__WEBPACK_IMPORTED_MODULE_3___default()));
 var app = new vue__WEBPACK_IMPORTED_MODULE_6__["default"]({
   el: '#app',
@@ -2456,7 +2634,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".center_page {\n  margin: auto;\n  width: 50%;\n  border: 3px solid #c8c8c8;\n  padding: 10px;\n  margin-top: 15%;\n  text-align: center;\n}\n\n.center {\n  text-align: center;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "a:hover {\n  text-decoration: none;\n}\n\n.center_page {\n  margin: auto;\n  width: 50%;\n  border: 3px solid #c8c8c8;\n  padding: 10px;\n  margin-top: 15%;\n  text-align: center;\n}\n\n.center {\n  text-align: center;\n}\n\n.floatRight {\n  float: right;\n}\n\n.fullWidth {\n  width: 100%;\n}\n\n.relative {\n  position: relative;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -65587,6 +65765,7 @@ var index = {
 
 var map = {
 	"./bancos.store.js": "./resources/js/Store/modules/bancos.store.js",
+	"./cartoes.store.js": "./resources/js/Store/modules/cartoes.store.js",
 	"./teste.store.js": "./resources/js/Store/modules/teste.store.js"
 };
 
@@ -65735,7 +65914,7 @@ module.exports = JSON.parse('{"_from":"axios@^0.21","_id":"axios@0.21.4","_inBun
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_Pages_Index_vue":1,"resources_js_Pages_Register_vue":1,"resources_js_Pages_Login_vue":1,"resources_js_Pages_User_Dashboard_vue":1,"resources_js_Pages_Bancos_Bancos_vue":1,"resources_js_Pages_Bancos_CadastrarBanco_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_Pages_Index_vue":1,"resources_js_Pages_Register_vue":1,"resources_js_Pages_Login_vue":1,"resources_js_Pages_User_Dashboard_vue":1,"resources_js_Pages_Bancos_Bancos_vue":1,"resources_js_Pages_Bancos_CadastrarBanco_vue":1,"resources_js_Pages_Bancos_Acoes_Cartoes_Cartoes_vue":1,"resources_js_Pages_Bancos_Acoes_Cartoes_CadastrarCartao_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

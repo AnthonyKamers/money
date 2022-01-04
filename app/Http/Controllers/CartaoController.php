@@ -3,22 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Models\Banco;
+use App\Models\Cartao;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class BancoController extends Controller
+class CartaoController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $bancos = Banco::where("user_id", Auth::user()->id)->get();
-
-        return response()->json($bancos);
+        $cartoes = Cartao::where("banco_id", $request->banco_id)->get();
+        
+        return response()->json($cartoes);
     }
 
     /**
@@ -39,15 +39,7 @@ class BancoController extends Controller
      */
     public function store(Request $request)
     {
-        $banco = new Banco;
-        $banco->user_id = Auth::user()->id;
-        $banco->nome = $request->nome;
-        $banco->agencia = $request->agencia;
-        $banco->conta = $request->conta;
-        $banco->saldo = $request->saldo;
-        $banco->save();
-
-        return response()->json("success");
+        //
     }
 
     /**
@@ -76,18 +68,12 @@ class BancoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $banco = Banco::find(intval($request->id));
-        $banco->nome = $request->banco["nome"];
-        $banco->agencia = $request->banco["agencia"];
-        $banco->conta = $request->banco["conta"];
-        $banco->saldo = $request->banco["saldo"];
-        $banco->save();
-
-        return response()->json("success");
+        //
     }
 
     /**
@@ -96,11 +82,8 @@ class BancoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $banco = Banco::find($request->id);
-        $banco->delete();
-
-        return response()->json("success");
+        //
     }
 }
