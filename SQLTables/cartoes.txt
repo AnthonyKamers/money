@@ -7,4 +7,5 @@ tipo  (crédito/débito) [0,1]
 final (integer (4))
 mensalidade (nullable) - float
 vencimento_fatura (nullable if débito) - integer (2)
+limite (float)
 cor - string

@@ -2,23 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Cartao;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class CartaoController extends Controller
+class RendaController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $cartoes = Cartao::where("banco_id", $request->banco_id)->get();
-        
-        return response()->json($cartoes);
+        //
     }
 
     /**
@@ -39,18 +34,7 @@ class CartaoController extends Controller
      */
     public function store(Request $request)
     {
-        $cartao = new Cartao;
-        $cartao->banco_id = $request->banco_id;
-        $cartao->nome = $request->nome;
-        $cartao->tipo = $request->tipo;
-        $cartao->final = $request->final;
-        $cartao->mensalidade = $request->mensalidade;
-        $cartao->vencimento_fatura = $request->vencimento_fatura;
-        $cartao->limite = $request->limite;
-        $cartao->cor = $request->cor;
-        $cartao->save();
-
-        return response()->json("success");
+        //
     }
 
     /**
@@ -79,9 +63,10 @@ class CartaoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -92,11 +77,8 @@ class CartaoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $cartao = Cartao::find($request->id);
-        $cartao->delete();
-
-        return response()->json("success");
+        //
     }
 }

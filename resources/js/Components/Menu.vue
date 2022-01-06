@@ -1,7 +1,7 @@
 <template>
 	<div class="menu">
 		<ul>Cadastrar
-			<li><router-link to="bancos">Bancos</router-link></li>
+			<li><router-link to="/bancos">Bancos</router-link></li>
 		</ul>
 
 		<div v-if="$store.getters['Bancos/getBancos']">
@@ -9,11 +9,10 @@
 				<h4 style="margin-bottom: 0;">{{ banco.nome }}</h4>
 				<li @click="$router.push({ path: `/banco/${banco.id}/cartoes` })" class="link">Cartões</li>
 				
-				<li>Rendas (entradas)</li>
+				<li @click="$router.push({ path: `/rendas/${banco.id}/rendas` })" class="link">Rendas (entradas)</li>
 				<ul>
-					<li>Categorias</li>
+					<li @click="$router.push({ path: `/rendas/${banco.id}/categorias` })" class="link">Categorias</li>
 					<li>Rendas fixas</li>
-					<li>Cadastrar renda</li>
 				</ul>
 
 				<li>Despesas (saídas)</li>

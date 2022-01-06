@@ -1,0 +1,8 @@
+FROM TABLE parcelas_renda
+
+id
+renda_id
+parcela --->
+valor
+data
+ja_em_conta (bool)

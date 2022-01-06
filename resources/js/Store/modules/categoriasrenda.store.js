@@ -1,33 +1,33 @@
 const state = {
-    cartoes: null,
-    apiCartoes: 'success',
-    editCartao: null
+    categorias: null,
+    apiCategorias: "success",
+    editCategoria: null
 };
 
 const getters = {
-    getCartoes(state) {
-        return state.cartoes;
+    getCategorias(state) {
+        return state.categorias;
     },
 
     getApi(state) {
-        return state.apiCartoes;
+        return state.apiCategorias;
     },
 
-    getEditCartao(state) {
-        return state.editCartao;
-    }
+    getEditCategoria(state) {
+        return state.editCategoria;
+    },
 };
 
 const actions = {
-    readCartoes({ commit, state, rootGetters }, instance) {
+    readCategorias({ commit, state, rootGetters }, instance) {
         return new Promise((resolve, reject) => {
-            instance.axios.get(`${instance.apiUrl}/cartoes/read`, {
+            instance.axios.get(`${instance.apiUrl}/rendas/categoria/read`, {
                 params: {
                     banco_id: parseInt(rootGetters["Bancos/getBancoNow"].id)
                 }
             }).then(
                 response => {
-                    commit("SET_CARTOES", response.data);
+                    commit("SET_CATEGORIAS", response.data);
                     resolve();
                 },
                 error => {
@@ -38,14 +38,14 @@ const actions = {
         });
     },
 
-    createCartao({ commit, dispatch }, payload) {
+    createCategoria({ commit, dispatch }, payload) {
         return new Promise((resolve, reject) => {
             commit("SET_API", "pending");
 
-            payload.instance.axios.post(`${payload.instance.apiUrl}/cartoes/create`, payload.data).then(
+            payload.instance.axios.post(`${payload.instance.apiUrl}/rendas/categoria/create`, payload.data).then(
                 response => {
                     if (response.data == 'success') {
-                        dispatch("readCartoes", payload.instance);
+                        dispatch("readCategorias", payload.instance);
                         commit("SET_API", 'success');
                         resolve(response.data);
                     } else {
@@ -62,14 +62,14 @@ const actions = {
         });
     },
 
-    deleteCartao({ commit, dispatch }, payload) {
+    deleteCategoria({ commit, dispatch }, payload) {
         return new Promise((resolve, reject) => {
             commit("SET_API", "pending");
 
-            payload.instance.axios.post(`${payload.instance.apiUrl}/cartoes/delete`, payload.data).then(
+            payload.instance.axios.post(`${payload.instance.apiUrl}/rendas/categoria/delete`, payload.data).then(
                 response => {
                     if (response.data == "success") {
-                        dispatch("readCartoes", payload.instance);
+                        dispatch("readCategorias", payload.instance);
                         commit("SET_API", "success");
                         resolve(response.data)
                     } else {
@@ -88,16 +88,16 @@ const actions = {
 };
 
 const mutations = {
-    SET_CARTOES(state, value) {
-        state.cartoes = value;
-    },
-
     SET_API(state, value) {
-        state.apiCartoes = value;
+        state.apiCategorias = value;
     },
 
-    SET_EDIT_CARTAO(state, value) {
-        state.editCartao = value;
+    SET_CATEGORIAS(state, value) {
+        state.categorias = value;
+    },
+
+    SET_EDIT_CATEGORIA(state, value) {
+        state.editCategoria = value;
     }
 };
 

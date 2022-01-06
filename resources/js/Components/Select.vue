@@ -6,6 +6,7 @@
             :items="items"
             :selected="value"
             :rules="rules"
+            :disabled="disabled"
             item-text="key"
             item-value="value"
             outlined
@@ -31,6 +32,9 @@ export default {
             required: false
         },
         cols: {
+            required: false
+        },
+        disabled: {
             required: false
         }
     },

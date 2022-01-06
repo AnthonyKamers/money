@@ -17,6 +17,10 @@
 export default {
     name: "Input",
 
+    created() {
+        this.attributeValue();
+    },
+
     props: {
         label: {
             required: true

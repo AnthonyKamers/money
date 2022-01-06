@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BancoController;
+use App\Http\Controllers\CartaoController;
+use App\Http\Controllers\CategoriaRendaController;
+use App\Http\Controllers\RendaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,4 +39,17 @@ Route::group(['middleware' => 'auth:api'], function() {
 
     // CRUD cartoes
     Route::get('cartoes/read', [CartaoController::class, 'index']);
+    Route::post('cartoes/create', [CartaoController::class, 'store']);
+    Route::post('cartoes/delete', [CartaoController::class, 'destroy']);
+
+    // rendas
+    // CRUD categorias
+    Route::get('rendas/categoria/read', [CategoriaRendaController::class, 'index']);
+    Route::post('rendas/categoria/create', [CategoriaRendaController::class, 'store']);
+    Route::post('rendas/categoria/delete', [CategoriaRendaController::class, 'destroy']);
+    
+    // CRUD rendas
+    Route::get('rendas/read', [RendaController::class, 'index']);
+    Route::post('rendas/create', [RendaController::class, 'store']);
+    Route::post('rendas/delete', [RendaController::class, 'destroy']);
 });

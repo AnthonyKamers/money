@@ -39,23 +39,6 @@
                 {{ edit ? `Editar` : "Cadastrar" }}
             </v-btn>
         </v-form>
-
-        <v-snackbar
-            v-model="snackbar"
-            >
-            {{ textSnackbar }}
-
-            <template v-slot:action="{ attrs }">
-                <v-btn
-                color="white"
-                text
-                v-bind="attrs"
-                @click="snackbar = false"
-                >
-                Fechar
-                </v-btn>
-            </template>
-        </v-snackbar>
     </div>
 </template>
 
@@ -134,14 +117,12 @@ export default {
 
                             this.edit = false;
                         } else {
-                            this.textSnackbar = response.data;
-                            this.snackbar = true;
+                            this.$store.dispatch("Global/setSnackbar", {text: response.data});
                         }
                     },
                     error => {
                         console.log(error);
-                        this.textSnackbar = error;
-                        this.snackbar = true;
+                        this.$store.dispatch("Global/setSnackbar", {text: response.data});
                     }
                 );
             }

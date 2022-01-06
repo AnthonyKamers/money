@@ -1,7 +1,8 @@
 const state = {
     bancos: null,
     apiBanco: "success",
-    editBanco: null
+    editBanco: null,
+    bancoNow: null,
 };
 
 const getters = {
@@ -15,6 +16,10 @@ const getters = {
 
     getEditBanco(state) {
         return state.editBanco;
+    },
+
+    getBancoNow(state) {
+        return state.bancoNow;
     }
 };
 
@@ -51,6 +56,7 @@ const actions = {
                 },
                 error => {
                     commit("SET_API", "error");
+                    console.log(error);
                     reject(error);
                 }
             )
@@ -120,6 +126,10 @@ const mutations = {
 
     SET_EDIT_BANCO(state, value) {
         state.editBanco = value;
+    },
+
+    SET_BANCO_NOW(state, value) {
+        state.bancoNow = value;
     }
 };
 

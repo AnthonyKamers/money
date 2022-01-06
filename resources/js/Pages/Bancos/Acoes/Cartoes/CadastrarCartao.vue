@@ -27,15 +27,16 @@
                     :items="[{key: 'Débito', value: 0}, {key: 'Crédito', value: 1}]"
                     @update="cartao.tipo = $event"
                 ></Select>
-            </v-row>
-
-            <v-row>
                 <Input
                     label="Últimos 4 dígitos do cartão"
                     :rules="ruleRequired"
                     :value="cartao.final"
+                    :maxlength="4"
                     @update="cartao.final = $event"
                 ></Input>
+            </v-row>
+
+            <v-row>
                 <InputNumber
                     label="Vencimento da fatura"
                     :rules="ruleRequired"
@@ -45,6 +46,12 @@
                     :stepInt="true"
                     @update="cartao.vencimento_fatura = $event"
                 ></InputNumber>
+                <Input
+                    label="Limite"
+                    :rules="ruleRequired"
+                    :value="cartao.limite"
+                    @update="cartao.limite = $event"
+                ></Input>
                 <Input
                     label="Mensalidade"
                     :value="cartao.mensalidade"
@@ -79,9 +86,11 @@ export default {
 
             this.edit = true;
             this.cartao = {...this.$store.getters["Cartoes/getEditCartao"]};
+            this.cartao.banco_id = this.$route.params.banco_id;
         } else {
             this.edit = false;
             this.cartao = {...this.cartaoDefault};
+            this.cartao.banco_id = this.$route.params.banco_id;
         }
     },
 
@@ -96,7 +105,8 @@ export default {
                 final: "",
                 mensalidade: "",
                 vencimento_fatura: "",
-                cor: ""
+                cor: "",
+                limite: ""
             },
 
             cartao: {},
@@ -106,7 +116,32 @@ export default {
     methods: {
         cadastrar() {
             if (this.$refs.form.validate()) {
-                //
+                const cartao = {...this.cartao};
+                
+                // parse
+                cartao.mensalidade = cartao.mensalidade.replace(",", ".");
+                cartao.limite = cartao.limite.replace(",", ".");
+                cartao.limite = parseFloat(cartao.limite);;
+                cartao.mensalidade = parseFloat(cartao.mensalidade);
+                cartao.tipo = parseInt(cartao.tipo);
+                cartao.final = parseInt(cartao.final);
+                cartao.vencimento_fatura = parseInt(cartao.vencimento_fatura);
+                cartao.banco_id = parseInt(cartao.banco_id);
+
+                const data = {
+                    instance: this.$root,
+                    data: cartao
+                };
+
+                this.$store.dispatch("Cartoes/createCartao", data).then(
+                    response => {
+                        this.$router.go(-1);
+                    },
+                    error => {
+                        console.log(error);
+                        this.$store.dispatch("Global/setSnackbar", {text: error});
+                    }
+                );
             }
         }
     }

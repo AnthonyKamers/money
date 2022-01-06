@@ -7,3 +7,5 @@ descricao
 valor
 data
 ja_em_conta (bool)
+parcelado (bool)
+parcelas - int (nullable) ---->

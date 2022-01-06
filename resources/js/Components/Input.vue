@@ -3,6 +3,7 @@
         <v-text-field
             v-model="model"
             :label="label"
+            :maxlength="maxlength"
             :rules="rules"
             outlined
         ></v-text-field>
@@ -25,7 +26,10 @@ export default {
         },
         cols: {
             required: false
-        }
+        },
+        maxlength: {
+            required: false
+        },
     },
 
     data() {

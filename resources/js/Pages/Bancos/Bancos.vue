@@ -132,22 +132,17 @@ export default {
             this.$store.dispatch("Bancos/deleteBanco", data).then(
                 response => {
                     if (this.$store.getters["Banco/getApi"] === "success") {
-                        this.dialogDelete = false;
-                        this.bancoDelete = {};
+                        this.fecharDelete();
 
-                        this.$textSnackbar = "Banco deletado com sucesso";
-                        this.snackbar = true;
+                        this.$store.dispatch("Global/setSnackbar", {text: "Banco deletado com sucesso", color: "success"});
                     } else {
-                        this.dialogDelete = false;
-                        this.bancoDelete = {};
+                        this.fecharDelete();
 
-                        this.textSnackbar = response;
-                        this.snackbar = true;
+                        this.$store.dispatch("Global/setSnackbar", {text: `Banco não foi deletado. \n ${response.data}`, color: "error"});
                     }
                 },
                 error => {
-                    this.textSnackbar = error;
-                    this.snackbar = true;
+                    this.$store.dispatch("Global/setSnackbar", {text: `Banco não foi deletado. \n ${error}`, color: "error"});
                 }
             );
         }

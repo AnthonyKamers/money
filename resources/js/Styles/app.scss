@@ -15,6 +15,10 @@ a:hover {
   text-align: center;
 }
 
+.none {
+  display: none !important;
+}
+
 .floatRight {
   float: right;
 }
@@ -25,4 +29,19 @@ a:hover {
 
 .relative {
   position: relative;
+}
+
+.square {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.noCursor {
+  cursor: inherit !important;
+}
+
+.drawer {
+  padding: 20px;
 }

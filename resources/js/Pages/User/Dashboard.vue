@@ -8,6 +8,21 @@
             <div class="fullWidth">
                 <router-view></router-view>
             </div>
+
+            <v-snackbar :value="$store.getters['Global/getSnackbar']" :color="$store.getters['Global/getColorSnackbar']">
+                {{ $store.getters['Global/getTextSnackbar'] }}
+
+                <template v-slot:action="{ attrs }">
+                    <v-btn
+                        color="white"
+                        text
+                        v-bind="attrs"
+                        @click="$store.dispatch('Global/disableSnackbar')"
+                    >
+                    Fechar
+                    </v-btn>
+                </template>
+            </v-snackbar>
         </div>
     </div>
 </template>

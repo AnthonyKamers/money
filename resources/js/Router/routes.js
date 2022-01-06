@@ -80,6 +80,43 @@ const routes = [
                 meta: {
                     title: "Cadastrar cartão banco"
                 }
+            },
+
+            // rendas
+            // categorias
+            {
+                path: '/rendas/:banco_id/categorias',
+                name: "Rendas.categorias",
+                component: () => import("../Pages/Bancos/Acoes/Rendas/Categorias.vue"),
+                meta: {
+                    title: "Categorias rendas banco"
+                }
+            },
+            {
+                path: '/rendas/:banco_id/cadastrar-categoria',
+                name: 'Rendas.categorias.cadastrar',
+                component: () => import("../Pages/Bancos/Acoes/Rendas/CadastrarCategoria.vue"),
+                meta: {
+                    title: "Cadastrar categoria de rendas"
+                }
+            },
+
+            // rendas
+            {
+                path: '/rendas/:banco_id/rendas',
+                name: "Rendas",
+                component: () => import("../Pages/Bancos/Acoes/Rendas/Rendas.vue"),
+                meta: {
+                    title: "Rendas"
+                }
+            },
+            {
+                path: '/rendas/:banco_id/cadastrar-renda',
+                name: "Rendas.cadastrar",
+                component: () => import("../Pages/Bancos/Acoes/Rendas/CadastrarRenda.vue"),
+                meta: {
+                    title: "Cadastrar rendas"
+                }
             }
         ]
     }

@@ -17,7 +17,7 @@ class CreateCartaosTable extends Migration
             $table->id();
             $table->string("nome");
             $table->tinyInteger("tipo"); //0 ou 1 (débito ou crédito)
-            $table->tinyInteger("final"); //últimos 4 dígitos do cartão
+            $table->mediumInteger("final"); //últimos 4 dígitos do cartão
             $table->double("mensalidade")->nullable();
             $table->tinyInteger("vencimento_fatura");
             $table->timestamps();

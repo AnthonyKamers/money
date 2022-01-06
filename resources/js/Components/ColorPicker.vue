@@ -60,13 +60,6 @@ export default {
     -moz-box-shadow: 3px 1px 19px 0px rgba(0,0,0,0.75);
 }
 
-.square {
-    width: 30px;
-    height: 30px;
-    border: 1px solid black;
-    cursor: pointer;
-}
-
 .selected {
     opacity: 0.7;
 }

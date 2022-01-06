@@ -1,0 +1,166 @@
+<template>
+    <Drawer
+        :active="active"
+        :width="500"
+        :speed="0.8"
+    >
+        <div class="drawer">
+            <v-icon
+                class="floatRight"
+                style="margin-top: 7px"
+                @click="fecharDrawer"
+            >
+                mdi-close
+            </v-icon>
+
+            <h1>Parcelas</h1>
+
+            <v-row>
+                <InputNumber
+                    label="Quantidade de parcelas"
+                    :rules="ruleRequired"
+                    :min="2"
+                    :max="999"
+                    :stepInt="true"
+                    :value="qtdParcelas"
+                    @update="qtdParcelas = $event"
+                ></InputNumber>
+                
+                <v-col :cols="1">
+                    <v-icon class="fixIcons" @click="addParcela">mdi-plus-circle</v-icon>
+                </v-col>
+            </v-row>
+
+            <div v-for="(parcela, index) in parcelas" :key="index">
+                <h4>Parcela {{ index+1 }}</h4>
+                <v-row>
+                    <Input
+                        label="Valor"
+                        :rules="ruleRequired"
+                        :value="parcela.valor"
+                        @update="parcela.valor = $event"
+                    ></Input>
+
+                    <InputDate
+                        label="Data"
+                        :rules="ruleRequired"
+                        :value="parcela.data"
+                        @update="parcela.data = $event"
+                    ></InputDate>
+
+                    <Select
+                        label="Já em conta"
+                        :rules="ruleRequired"
+                        :items="itemsBool"
+                        :value="parcela.ja_em_conta"
+                        @update="parcela.ja_em_conta = $event"
+                    ></Select>
+
+                    <v-col :cols="1">
+                        <v-icon
+                            class="fixIcons"
+                            :disabled="index < 2"
+                            @click="removeParcela(index)"
+                        >
+                            mdi-delete
+                        </v-icon>
+                    </v-col>
+                </v-row>
+            </div>
+            
+            <v-btn class="primary" @click="salvar">
+                Salvar
+            </v-btn>
+        </div>
+    </Drawer>
+</template>
+
+<script>
+import Drawer from "../../../../Components/Drawer.vue";
+import InputNumber from "../../../../Components/InputNumber.vue";
+import Input from "../../../../Components/Input.vue";
+import InputDate from "../../../../Components/InputDate.vue";
+import Select from "../../../../Components/Select.vue";
+
+export default {
+    name: "ParcelasRenda",
+
+    components: {
+        Drawer,
+        InputNumber,
+        Input,
+        InputDate,
+        Select
+    },
+
+    mounted() {
+        this.createParcelas();
+    },
+
+    props: {
+        active: {
+            required: true
+        },
+
+        valor_total: {
+            required: true
+        }
+    },
+
+    data() {
+        return {
+            parcelas: [],
+            qtdParcelas: 2
+        }
+    },
+
+    methods: {
+        fecharDrawer() {
+            this.$emit('close');
+        },
+        
+        createParcelas() {
+            this.parcelas = [];
+
+            for (var i = 0; i < this.qtdParcelas; i++) {
+                this.parcelas.push({
+                    valor: "",
+                    data: "",
+                    ja_em_conta: false
+                });
+            }
+        },
+
+        addParcela() {
+            this.parcelas.push({
+                valor: "",
+                data: "",
+                ja_em_conta: false
+            });
+
+            this.qtdParcelas += 1;
+        },
+
+        removeParcela(index) {
+            this.parcelas.pop(index);
+            this.qtdParcelas -= 1;
+        },
+
+        salvar() {
+            this.fecharDrawer();
+        }
+    },
+
+    watch: {
+        qtdParcelas(val) {
+            this.createParcelas();
+        }
+    }
+}
+</script>
+
+<style scoped>
+.fixIcons {
+    margin-top: 15px;
+}
+</style>
