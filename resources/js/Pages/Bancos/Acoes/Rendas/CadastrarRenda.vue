@@ -7,7 +7,7 @@
         <v-form
             ref="form"
             v-model="valid"
-            :disabled="drawerParcelas"
+            :disabled="drawerParcelas || drawerRendaFixa"
         >
             <v-row>
                 <Select
@@ -55,11 +55,26 @@
                     :disabled="renda.parcelado"
                     @update="renda.ja_em_conta = $event"
                 ></Select>
+                <Select
+                    label="Renda fixa"
+                    :value="renda.renda_fixa"
+                    :items="itemsBool"
+                    :disabled="renda.parcelado"
+                    @update="renda.renda_fixa = $event"
+                ></Select>
             </v-row>
 
             <v-btn
+                v-if="!renda.parcelado && renda.renda_fixa"
                 class="secondary"
-                :class="{ none: !renda.parcelado }"
+                :disabled="drawerRendaFixa"
+                @click="drawerRendaFixa = true"
+            >
+                Renda fixa
+            </v-btn>
+            <v-btn
+                v-if="renda.parcelado"
+                class="secondary"
                 :disabled="drawerParcelas"
                 @click="drawerParcelas = true"
             >
@@ -67,7 +82,7 @@
             </v-btn>
             <v-btn
                 class="primary"
-                :disabled="drawerParcelas"
+                :disabled="drawerParcelas || drawerRendaFixa"
                 @click="cadastrar"
             >
                 Cadastrar
@@ -77,8 +92,16 @@
         <ParcelasRenda
             :active="drawerParcelas"
             :valor_total="renda.valor"
+            @valid="validParcelas = $event"
             @close="drawerParcelas = false"
         ></ParcelasRenda>
+
+        <CadastrarRendaFixa
+            :active="drawerRendaFixa"
+            :renda="renda"
+            @valid="validRendaFixa = $event"
+            @close="drawerRendaFixa = false"
+        ></CadastrarRendaFixa>
     </div>
 </template>
 
@@ -87,6 +110,7 @@ import Input from "../../../../Components/Input.vue";
 import Select from "../../../../Components/Select.vue";
 import InputDate from "../../../../Components/InputDate.vue";
 import ParcelasRenda from "./ParcelasRenda.vue";
+import CadastrarRendaFixa from "./CadastrarRendaFixa.vue";
 
 export default {
     name: "CadastrarRenda",
@@ -95,7 +119,8 @@ export default {
         Input,
         Select,
         InputDate,
-        ParcelasRenda
+        ParcelasRenda,
+        CadastrarRendaFixa
     },
 
     created() {
@@ -132,20 +157,54 @@ export default {
                 descricao: "",
                 valor: "",
                 data: "",
-                ja_em_conta: "",
-                parcelado: false
+                ja_em_conta: false,
+                parcelado: false,
+                renda_fixa: false
             },
 
             renda: {},
 
-            drawerParcelas: false
+            drawerParcelas: false,
+            validParcelas: false,
+
+            drawerRendaFixa: false,
+            validRendaFixa: false
         }
     },
 
     methods: {
         cadastrar() {
             if (this.$refs.form.validate()) {
-                //
+                if (this.renda.parcelado && !this.validParcelas) {
+                    this.$store.dispatch("Global/setSnackbar", {text: "Campos em parcelas não estão completos", color: 'error'});
+                    this.drawerParcelas = true;
+                    return;
+                }
+
+                if (this.renda.renda_fixa && !this.validRendaFixa) {
+                    this.$store.dispatch("Global/setSnackbar", {text: "Campos em renda fixa não estão completos", color: 'error'});
+                    this.drawerRendaFixa = true;
+                    return;
+                }
+
+                const renda = {...this.renda};
+                renda.valor = parseFloat(renda.valor.replace(",", "."));
+
+                const data = {
+                    instance: this.$root,
+                    data: renda
+                };
+
+                // cadastrar depois de todas as verificações
+                this.$store.dispatch("Rendas/createRenda", data).then(
+                    response => {
+                        this.$store.dispatch("Rendas/resetState");
+                        this.$router.go(-1);
+                    },
+                    error => {
+                        this.$store.dispatch("Global/setSnackbar", {text: `Erro ao cadastrar renda - ${error}`, color: 'error'});
+                    }
+                );
             }
         }
     }

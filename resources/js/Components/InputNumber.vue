@@ -7,6 +7,8 @@
             :min="min"
             :max="max"
             :step="stepInt ? 1 : 0.1"
+            :disabled="disabled"
+            :dense="dense"
             type="number"
             outlined
         ></v-text-field>
@@ -41,6 +43,12 @@ export default {
             required: false
         },
         cols: {
+            required: false
+        },
+        disabled: {
+            required: false
+        },
+        dense: {
             required: false
         }
     },

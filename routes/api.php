@@ -52,4 +52,10 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('rendas/read', [RendaController::class, 'index']);
     Route::post('rendas/create', [RendaController::class, 'store']);
     Route::post('rendas/delete', [RendaController::class, 'destroy']);
+
+    // parcelas
+    Route::get('parcelas/read', [RendaController::class, 'readParcelas']);
+
+    // renda fixa
+    Route::get('renda-fixa/read', [RendaController::class, 'readRendaFixa']);
 });

@@ -117,6 +117,24 @@ const routes = [
                 meta: {
                     title: "Cadastrar rendas"
                 }
+            },
+
+            // ações rendas
+            {
+                path: '/rendas/:banco_id/ver-parcelas/:renda_id',
+                name: "Rendas.ver_parcelas",
+                component: () => import("../Pages/Bancos/Acoes/Rendas/VerParcelas.vue"),
+                meta: {
+                    title: "Ver parcelas renda"
+                }
+            },
+            {
+                path: '/rendas/:banco_id/ver-renda-fixa/:renda_fixa_id',
+                name: "Rendas.ver_renda_fixa",
+                component: () => import("../Pages/Bancos/Acoes/Rendas/VerRendaFixa.vue"),
+                meta: {
+                    title: "Ver renda fixa"
+                }
             }
         ]
     }

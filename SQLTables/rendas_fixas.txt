@@ -4,5 +4,6 @@ id
 banco_id
 categoria_id
 valor
+descricao
 qtd_mes
-data (nullable)
+dia_mes - int(nullable)

@@ -29,6 +29,7 @@
         "@websanova/vue-auth": "^4.1.8",
         "es6-promise": "^4.2.8",
         "vue-axios": "^3.4.0",
+        "vue-moment": "^4.1.0",
         "vue-router": "^3.5.2",
         "vuetify": "^2.5.9",
         "vuex": "^3.6.2",

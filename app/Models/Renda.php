@@ -17,4 +17,16 @@ class Renda extends Model
 
     // Timestamps
     public $timestamps = true;
+
+    public function categoria() {
+        return $this->belongsTo(CategoriaRenda::class, 'categoria_id', 'id');
+    }
+
+    public function parcelas_all() {
+        return $this->hasMany(ParcelaRenda::class);
+    }
+
+    public function renda_fixa() {
+        return $this->belongsTo(RendaFixa::class);
+    }
 }

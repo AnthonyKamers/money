@@ -15,62 +15,64 @@
 
             <h1>Parcelas</h1>
 
-            <v-row>
-                <InputNumber
-                    label="Quantidade de parcelas"
-                    :rules="ruleRequired"
-                    :min="2"
-                    :max="999"
-                    :stepInt="true"
-                    :value="qtdParcelas"
-                    @update="qtdParcelas = $event"
-                ></InputNumber>
-                
-                <v-col :cols="1">
-                    <v-icon class="fixIcons" @click="addParcela">mdi-plus-circle</v-icon>
-                </v-col>
-            </v-row>
-
-            <div v-for="(parcela, index) in parcelas" :key="index">
-                <h4>Parcela {{ index+1 }}</h4>
+            <v-form ref="formParcelas" v-model="valid">
                 <v-row>
-                    <Input
-                        label="Valor"
+                    <InputNumber
+                        label="Quantidade de parcelas"
                         :rules="ruleRequired"
-                        :value="parcela.valor"
-                        @update="parcela.valor = $event"
-                    ></Input>
-
-                    <InputDate
-                        label="Data"
-                        :rules="ruleRequired"
-                        :value="parcela.data"
-                        @update="parcela.data = $event"
-                    ></InputDate>
-
-                    <Select
-                        label="Já em conta"
-                        :rules="ruleRequired"
-                        :items="itemsBool"
-                        :value="parcela.ja_em_conta"
-                        @update="parcela.ja_em_conta = $event"
-                    ></Select>
-
+                        :min="2"
+                        :max="999"
+                        :stepInt="true"
+                        :value="qtdParcelas"
+                        @update="qtdParcelas = $event"
+                    ></InputNumber>
+                    
                     <v-col :cols="1">
-                        <v-icon
-                            class="fixIcons"
-                            :disabled="index < 2"
-                            @click="removeParcela(index)"
-                        >
-                            mdi-delete
-                        </v-icon>
+                        <v-icon class="fixIcons" @click="addParcela">mdi-plus-circle</v-icon>
                     </v-col>
                 </v-row>
-            </div>
-            
-            <v-btn class="primary" @click="salvar">
-                Salvar
-            </v-btn>
+
+                <div v-for="(parcela, index) in parcelas" :key="index">
+                    <h4>Parcela {{ index+1 }}</h4>
+                    <v-row>
+                        <Input
+                            label="Valor"
+                            :rules="ruleRequired"
+                            :value="parcela.valor"
+                            @update="parcela.valor = $event"
+                        ></Input>
+
+                        <InputDate
+                            label="Data"
+                            :rules="ruleRequired"
+                            :value="parcela.data"
+                            @update="parcela.data = $event"
+                        ></InputDate>
+
+                        <Select
+                            label="Já em conta"
+                            :rules="ruleRequired"
+                            :items="itemsBool"
+                            :value="parcela.ja_em_conta"
+                            @update="parcela.ja_em_conta = $event"
+                        ></Select>
+
+                        <v-col :cols="1">
+                            <v-icon
+                                class="fixIcons"
+                                :disabled="index < 2"
+                                @click="removeParcela(index)"
+                            >
+                                mdi-delete
+                            </v-icon>
+                        </v-col>
+                    </v-row>
+                </div>
+                
+                <v-btn class="primary" @click="salvar">
+                    Salvar
+                </v-btn>
+            </v-form>
         </div>
     </Drawer>
 </template>
@@ -109,6 +111,7 @@ export default {
 
     data() {
         return {
+            valid: false,
             parcelas: [],
             qtdParcelas: 2
         }
@@ -154,6 +157,22 @@ export default {
     watch: {
         qtdParcelas(val) {
             this.createParcelas();
+        },
+
+        parcelas: {
+            handler(newVal, oldVal) {
+                this.$store.commit("Rendas/SET_PARCELAS_RENDA", this.forceCopy(newVal));
+            },
+            deep: true,
+            immediate: true
+        },
+
+        valid: {
+            handler(val) {
+                this.$emit("valid", val);
+            },
+            deep: true,
+            immediate: true
         }
     }
 }

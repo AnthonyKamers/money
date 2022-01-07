@@ -38,6 +38,14 @@ Vue.mixin({
                 if (nameA > nameB) return 1;
                 return 0;
             });
+        },
+
+        forceCopy(arg) {
+            return JSON.parse(JSON.stringify(arg));
+        },
+
+        booleanConvert(bool) {
+            return bool ? "Sim" : "Não";
         }
     }
 });

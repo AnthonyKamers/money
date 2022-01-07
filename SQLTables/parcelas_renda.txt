@@ -2,7 +2,7 @@ FROM TABLE parcelas_renda
 
 id
 renda_id
-parcela --->
+parcela
 valor
 data
 ja_em_conta (bool)

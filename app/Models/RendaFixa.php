@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ParcelaRenda extends Model
+class RendaFixa extends Model
 {
     use HasFactory;
 
     // Table Name
-    protected $table = 'parcelas_renda';
+    protected $table = 'rendas_fixas';
 
     // Primary Key
     public $primaryKey = 'id';
@@ -18,7 +18,7 @@ class ParcelaRenda extends Model
     // Timestamps
     public $timestamps = true;
 
-    public function renda() {
-        return $this->belongsTo(Renda::class, 'renda_id', 'id');
+    public function categoria() {
+        return $this->belongsTo(CategoriaRenda::class, 'categoria_id', 'id');
     }
 }

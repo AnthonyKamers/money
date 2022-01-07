@@ -5,6 +5,7 @@
             :label="label"
             :maxlength="maxlength"
             :rules="rules"
+            :dense="dense"
             outlined
         ></v-text-field>
     </v-col>
@@ -30,6 +31,9 @@ export default {
         maxlength: {
             required: false
         },
+        dense: {
+            required: false
+        }
     },
 
     data() {

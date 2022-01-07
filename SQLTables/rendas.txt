@@ -8,4 +8,5 @@ valor
 data
 ja_em_conta (bool)
 parcelado (bool)
-parcelas - int (nullable) ---->
+parcelas - int (nullable)
+renda_fixa_id - nullable

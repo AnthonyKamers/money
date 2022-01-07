@@ -14,6 +14,7 @@
           :rules="rules"
           v-model="dateFormatted"
           :label="label"
+          :dense="dense"
           outlined
           @change="changeEvents()"
           @click:clear="clearEvents()"
@@ -43,6 +44,9 @@ export default {
     value: {
       required: false
     },
+    dense: {
+      required: false
+    }
   },
 
   data() {

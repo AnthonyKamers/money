@@ -7,6 +7,7 @@
             :selected="value"
             :rules="rules"
             :disabled="disabled"
+            :dense="dense"
             item-text="key"
             item-value="value"
             outlined
@@ -35,6 +36,9 @@ export default {
             required: false
         },
         disabled: {
+            required: false
+        },
+        dense: {
             required: false
         }
     },
