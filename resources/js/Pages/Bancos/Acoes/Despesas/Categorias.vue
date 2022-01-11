@@ -2,7 +2,7 @@
     <div>
         <v-icon @click="$router.go(-1)" class="floatRight">mdi-arrow-left</v-icon>
 
-        <h1>Categorias de renda de  {{ $store.getters["Bancos/getBancoNow"] != null ? $store.getters["Bancos/getBancoNow"].nome : "" }}</h1>
+        <h1>Categorias de despesa de  {{ $store.getters["Bancos/getBancoNow"] != null ? $store.getters["Bancos/getBancoNow"].nome : "" }}</h1>
 
         <router-link to="cadastrar-categoria"><v-btn class="primary">Cadastrar categoria</v-btn></router-link>
 
@@ -12,20 +12,29 @@
                     <tr>
                         <th></th>
                         <th class="text-left">Nome</th>
+                        <th class="text-left">Porcentagem destinada (controle)</th>
                         <th class="text-left">Ações</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <tr v-for="categoria in $store.getters['Categoriasrenda/getCategorias']" :key="categoria.id">
+                    <tr v-for="categoria in $store.getters['Categoriasdespesa/getCategorias']" :key="categoria.id">
                         <td><div class="square noCursor" :style="{ backgroundColor: categoria.cor }"></div></td>
                         <td>{{ categoria.nome }}</td>
+                        <td>{{ categoria.porcent }}</td>
                         <td>
                             <v-icon>mdi-pencil</v-icon>
                             <v-icon @click="deleteCategoria(categoria)">mdi-delete</v-icon>
                         </td>
                     </tr>
                 </tbody>
+
+                <tfoot>
+                    <tr class="bolder">
+                        <td colspan="2">Total</td>
+                        <td>{{ totalPorcent }}</td>
+                    </tr>
+                </tfoot>
             </template>
         </v-simple-table>
 
@@ -54,7 +63,7 @@
                     <v-btn
                         color="red darken-1"
                         text
-                        :loading="$store.getters['Categoriasrenda/getApi'] == 'pending'"
+                        :loading="$store.getters['Categoriasdespesa/getApi'] == 'pending'"
                         @click="deletar"
                     >
                         Deletar
@@ -74,9 +83,24 @@ export default {
             () => {
                 const banco = this.$store.getters["Bancos/getBancos"].find(el => el.id == this.$route.params.banco_id);
                 this.$store.commit("Bancos/SET_BANCO_NOW", banco);
-                this.$store.dispatch("Categoriasrenda/readCategorias", this.$root);
+                this.$store.dispatch("Categoriasdespesa/readCategorias", this.$root);
             }
         );
+    },
+
+    computed: {
+        totalPorcent() {
+            const categorias = this.$store.getters['Categoriasdespesa/getCategorias'];
+            var total = 0;
+
+            if (categorias) {
+                for (var i = 0; i < categorias.length; i++) {
+                    total += categorias[i].porcent;
+                }
+            }
+
+            return total;
+        }
     },
 
     data() {
@@ -100,7 +124,7 @@ export default {
                 }
             };
 
-            this.$store.dispatch("Categoriasrenda/deleteCategoria", data).then(
+            this.$store.dispatch("Categoriasdespesa/deleteCategoria", data).then(
                 response => {
                     this.fecharDelete();
 

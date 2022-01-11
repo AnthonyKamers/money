@@ -6,6 +6,7 @@
             :maxlength="maxlength"
             :rules="rules"
             :dense="dense"
+            :clearable="clearable"
             outlined
         ></v-text-field>
     </v-col>
@@ -32,6 +33,9 @@ export default {
             required: false
         },
         dense: {
+            required: false
+        },
+        clearable: {
             required: false
         }
     },

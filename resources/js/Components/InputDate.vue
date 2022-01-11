@@ -15,6 +15,7 @@
           v-model="dateFormatted"
           :label="label"
           :dense="dense"
+          :clearable="clearable"
           outlined
           @change="changeEvents()"
           @click:clear="clearEvents()"
@@ -45,6 +46,9 @@ export default {
       required: false
     },
     dense: {
+      required: false
+    },
+    clearable: {
       required: false
     }
   },

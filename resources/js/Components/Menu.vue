@@ -12,16 +12,15 @@
 				<li @click="$router.push({ path: `/rendas/${banco.id}/rendas` })" class="link">Rendas (entradas)</li>
 				<ul>
 					<li @click="$router.push({ path: `/rendas/${banco.id}/categorias` })" class="link">Categorias</li>
-					<li>Rendas fixas</li>
+					<li @click="$router.push({ path: `/rendas/${banco.id}/rendas-fixas` })" class="link">Rendas fixas</li>
 				</ul>
 
-				<li>Despesas (saídas)</li>
+				<li @click="$router.push({ path: `/despesas/${banco.id}/despesas` })" class="link">Despesas (saídas)</li>
 				<ul>
-					<li>Categorias</li>
+					<li @click="$router.push({ path: `/despesas/${banco.id}/categorias` })" class="link">Categorias</li>
 					<li>Despesas fixas</li>
 					<li>Faturas cartões</li>
 					<li>Parcelas à pagar</li>
-					<li>Despesas</li>
 				</ul>
 
 				<li>Extrato</li>

@@ -6,7 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BancoController;
 use App\Http\Controllers\CartaoController;
 use App\Http\Controllers\CategoriaRendaController;
+use App\Http\Controllers\CategoriaDespesaController;
 use App\Http\Controllers\RendaController;
+use App\Http\Controllers\DespesaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,9 +55,27 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('rendas/create', [RendaController::class, 'store']);
     Route::post('rendas/delete', [RendaController::class, 'destroy']);
 
+    // contabilizar renda
+    Route::post('rendas/contabilizar', [RendaController::class, 'contabilizar']);
+
     // parcelas
     Route::get('parcelas/read', [RendaController::class, 'readParcelas']);
 
     // renda fixa
     Route::get('renda-fixa/read', [RendaController::class, 'readRendaFixa']);
+    Route::get('renda-fixa/all', [RendaController::class, 'readRendaFixaAll']);
+
+
+    // formas pagamento
+    Route::get('formaspagamento/read', [DespesaController::class, 'getFormasPagamento']);
+
+    // despesas
+    // CRUD categorias
+    Route::get('despesas/categoria/read', [CategoriaDespesaController::class, 'index']);
+    Route::post('despesas/categoria/create', [CategoriaDespesaController::class, 'store']);
+    Route::post('despesas/categoria/delete', [CategoriaDespesaController::class, 'destroy']);
+
+    // CRUD despesas
+    Route::get('despesas/read', [DespesaController::class, 'index']);
+    Route::post('despesas/create', [DespesaController::class, 'store']);
 });

@@ -2,12 +2,15 @@ FROM TABLE despesas
 
 id
 banco_id
-categoria_id
 forma_pagamento_id
-cartao_id
+categoria_id - nullable
+cartao_id - nullable
+
 descricao
 valor
-data (da despesa, caso seja cartão de crédito)
+data (da despesa)
 ja_debitado (bool, nullable)
 
-qtd_vezes (boleto, cartão de crédito)
+parcelado (bool)
+parcelas - int (nullable)
+despesa_fixa_id - int (nullable)

@@ -166,9 +166,17 @@ class RendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
         //
+    }
+
+    public function contabilizar(Request $request) {
+        $renda = Renda::find(intval($request->renda_id));
+        $renda->ja_em_conta = true;
+        $renda->save();
+
+        return response()->json('success');
     }
 
     public function readParcelas(Request $request) {
@@ -182,24 +190,19 @@ class RendaController extends Controller
 
     public function readRendaFixa(Request $request) {
         $renda_fixa = RendaFixa::find($request->renda_fixa_id)->with('categoria')->get();
-        
-        if (!$request->busca) {
-            $data_hoje = date('Y-m-d');
-            $data_3_meses = date('Y-m-d', strtotime(date('Y-m-d')." -3 month"));
-            $rendas_especificas = Renda::whereBetween('data', [$data_3_meses, $data_hoje])
-                                        ->where('renda_fixa_id', $request->renda_fixa_id)
-                                        ->get();
-        } else {
-            $rendas_especificas = Renda::whereBetween('data', [$request->dataDe, $request->dataAte])
-                                        ->where('renda_fixa_id', $request->renda_fixa_id)
-                                        ->get();
-        }
+        $rendas = Renda::where('renda_fixa_id', $request->renda_fixa_id)->get();
 
         $data = [
             'renda_fixa' => $renda_fixa,
-            'rendas' => $rendas_especificas
+            'rendas' => $rendas
         ];
         
         return response()->json($data);
+    }
+
+    public function readRendaFixaAll(Request $request) {
+        $rendas_fixas = RendaFixa::where('banco_id', $request->banco_id)->with('categoria')->get();
+
+        return response()->json($rendas_fixas);
     }
 }

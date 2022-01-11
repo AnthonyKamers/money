@@ -4,3 +4,4 @@ id
 banco_id
 nome
 cor
+porcent -> int, nullable

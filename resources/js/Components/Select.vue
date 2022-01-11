@@ -8,6 +8,7 @@
             :rules="rules"
             :disabled="disabled"
             :dense="dense"
+            :clearable="clearable"
             item-text="key"
             item-value="value"
             outlined
@@ -39,6 +40,9 @@ export default {
             required: false
         },
         dense: {
+            required: false
+        },
+        clearable: {
             required: false
         }
     },

@@ -2,7 +2,7 @@ FROM TABLE rendas_fixas
 
 id
 banco_id
-categoria_id
+categoria_id - nullable
 valor
 descricao
 qtd_mes

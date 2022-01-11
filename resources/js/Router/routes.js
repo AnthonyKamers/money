@@ -135,7 +135,54 @@ const routes = [
                 meta: {
                     title: "Ver renda fixa"
                 }
-            }
+            },
+
+            // rendas fixas
+            {
+                path: '/rendas/:banco_id/rendas-fixas',
+                name: "Rendas.rendas-fixas",
+                component: () => import("../Pages/Bancos/Acoes/Rendas/RendasFixas.vue"),
+                meta: {
+                    title: "Rendas fixas"
+                }
+            },
+
+
+            // despesas
+            {
+                path: '/despesas/:banco_id/categorias',
+                name: "Despesas.categorias",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/Categorias.vue"),
+                meta: {
+                    title: "Categorias de despesas"
+                }
+            },
+            {
+                path: '/despesas/:banco_id/cadastrar-categoria',
+                name: 'Despedesas.categorias.cadastrar',
+                component: () => import("../Pages/Bancos/Acoes/Despesas/CadastrarCategoria.vue"),
+                meta: {
+                    title: "Cadastrar categoria de despesas"
+                }
+            },
+
+            // despesas
+            {
+                path: '/despesas/:banco_id/despesas',
+                name: "Despesas",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/Despesas.vue"),
+                meta: {
+                    title: "Despesas"
+                }
+            },
+            {
+                path: '/despesas/:banco_id/cadastrar-despesa',
+                name: "Despesas.cadastrar",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/CadastrarDespesa.vue"),
+                meta: {
+                    title: "Cadastrar despesa"
+                }
+            },
         ]
     }
 ];

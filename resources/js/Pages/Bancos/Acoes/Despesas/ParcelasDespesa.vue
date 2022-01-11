@@ -85,7 +85,7 @@ import InputDate from "../../../../Components/InputDate.vue";
 import Select from "../../../../Components/Select.vue";
 
 export default {
-    name: "ParcelasRenda",
+    name: "ParcelasDespesa",
 
     components: {
         Drawer,
@@ -105,7 +105,7 @@ export default {
         },
 
         valor_total: {
-            required: true
+            required: false
         }
     },
 
@@ -161,7 +161,7 @@ export default {
 
         parcelas: {
             handler(newVal, oldVal) {
-                this.$store.commit("Rendas/SET_PARCELAS_RENDA", this.forceCopy(newVal));
+                this.$store.commit("Despesas/SET_PARCELAS_DESPESA", this.forceCopy(newVal));
             },
             deep: true,
             immediate: true
@@ -176,7 +176,7 @@ export default {
         }
     }
 }
-</script>
+</script>,
 
 <style scoped>
 .fixIcons {

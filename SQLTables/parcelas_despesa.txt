@@ -1,8 +1,8 @@
 FROM TABLE parcelas_despesa
 
 id
-banco_id
 despesa_id
-qtd_vezes_now
-valor_parcela
+parcela
+valor
+data
 ja_debitado (bool)

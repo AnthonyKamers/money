@@ -13,46 +13,46 @@
                 mdi-close
             </v-icon>
 
-            <h1>Cadastrar renda fixa</h1>
+            <h1>Cadastrar despesa fixa</h1>
 
             <v-form ref="form" v-model="valid">
                 <v-row>
                     <InputNumber
-                        label="Quantidade vezes renda no mês?"
+                        label="Quantidade vezes despesa no mês?"
                         :rules="ruleRequired"
-                        :value="renda_fixa.qtd_mes"
+                        :value="despesa_fixa.qtd_mes"
                         :min="1"
                         :max="30"
                         :stepInt="true"
-                        @update="renda_fixa.qtd_mes = $event"
+                        @update="despesa_fixa.qtd_mes = $event"
                     ></InputNumber>
 
                     <Select
-                        label="Esta renda é mensal?"
-                        :value="renda_fixa.mensal"
+                        label="Esta despesa é mensal?"
+                        :value="despesa_fixa.mensal"
                         :items="itemsBool"
-                        :disabled="renda_fixa.qtd_mes > 1"
-                        @update="renda_fixa.mensal = $event"
+                        :disabled="despesa_fixa.qtd_mes > 1"
+                        @update="despesa_fixa.mensal = $event"
                     ></Select>
                 </v-row>
 
                 <v-row>
                     <Select
                         label="Sempre no mesmo dia?"
-                        :value="renda_fixa.sempre_dia"
+                        :value="despesa_fixa.sempre_dia"
                         :items="itemsBool"
-                        :disabled="!renda_fixa.mensal || renda_fixa.qtd_mes > 1"
-                        @update="renda_fixa.sempre_dia = $event"
+                        :disabled="!despesa_fixa.mensal || despesa_fixa.qtd_mes > 1"
+                        @update="despesa_fixa.sempre_dia = $event"
                     ></Select>
 
                     <InputNumber
                         label="Qual dia do mês?"
-                        :value="renda_fixa.dia_mes"
+                        :value="despesa_fixa.dia_mes"
                         :min="1"
                         :max="31"
-                        :disabled="!renda_fixa.sempre_dia || !renda_fixa.mensal || renda_fixa.qtd_mes > 1"
+                        :disabled="!despesa_fixa.sempre_dia || !despesa_fixa.mensal || despesa_fixa.qtd_mes > 1"
                         :stepInt="true"
-                        @update="renda_fixa.dia_mes = $event"
+                        @update="despesa_fixa.dia_mes = $event"
                     ></InputNumber>
                 </v-row>
 
@@ -73,7 +73,7 @@ import Select from "../../../../Components/Select.vue";
 import InputNumber from "../../../../Components/InputNumber.vue";
 
 export default {
-    name: "CadastrarRendaFixa",
+    name: "CadastrarDespesaFixa",
 
     components: {
         Drawer,
@@ -85,7 +85,7 @@ export default {
         active: {
             required: true
         },
-        renda: {
+        despesa: {
             required: true
         }
     },
@@ -94,7 +94,7 @@ export default {
         return {
             valid: false,
 
-            renda_fixa: {
+            despesa_fixa: {
                 mensal: true,
                 sempre_dia: false,
                 dia_mes: "",
@@ -114,9 +114,9 @@ export default {
     },
 
     watch: {
-        renda_fixa: {
+        despesa_fixa: {
             handler(newVal, oldVal) {
-                this.$store.commit("Rendas/SET_RENDA_FIXA", {...newVal});
+                this.$store.commit("Despesas/SET_DESPESA_FIXA", {...newVal});
             },
             deep: true,
             immediate: true

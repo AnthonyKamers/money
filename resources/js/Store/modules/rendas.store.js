@@ -5,7 +5,9 @@ const state = {
 
     renda_fixa: null,
     parcelas_renda: null,
-    dataRendaFixa: null
+    dataRendaFixa: null,
+
+    rendas_fixas: null
 };
 
 const getters = {
@@ -31,6 +33,10 @@ const getters = {
 
     getDataRendaFixa(state) {
         return state.dataRendaFixa;
+    },
+
+    getRendasFixas(state) {
+        return state.rendas_fixas;
     }
 };
 
@@ -85,6 +91,30 @@ const actions = {
         });
     },
 
+    // contabilizar renda
+    contabilizarRenda({ commit, dispatch }, payload) {
+        return new Promise((resolve, reject) => {
+            commit("SET_API", 'pending');
+
+            payload.instance.axios.post(`${payload.instance.apiUrl}/rendas/contabilizar`, payload.data).then(
+                response => {
+                    if (response.data == "success") {
+                        dispatch("readRendas", payload.instance);
+                        commit("SET_API", 'success');
+                        resolve();
+                    } else {
+                        commit('SET_API', 'error');
+                        reject(response.data);
+                    }
+                },
+                error => {
+                    commit('SET_API', 'error');
+                    reject(error);
+                }
+            );
+        });
+    },
+
     resetState({ commit }) {
         commit("SET_EDIT_RENDA", null);
         commit("SET_RENDA_FIXA", null);
@@ -133,6 +163,29 @@ const actions = {
                 }
             );
         });
+    },
+
+    // read rendas fixas all
+    readRendasFixasAll({ commit, rootGetters }, instance) {
+        return new Promise((resolve, reject) => {
+            commit("SET_API", 'pending');
+
+            instance.axios.get(`${instance.apiUrl}/renda-fixa/all`, {
+                params: {
+                    banco_id: parseInt(rootGetters["Bancos/getBancoNow"].id)
+                }
+            }).then(
+                response => {
+                    commit("SET_API", 'success');
+                    commit('SET_RENDAS_FIXAS', response.data);
+                    resolve();
+                },
+                error => {
+                    commit("SET_API", 'error');
+                    reject(error);
+                }
+            );
+        });
     }
 };
 
@@ -159,6 +212,10 @@ const mutations = {
 
     SET_DATA_RENDA_FIXA(state, value) {
         state.dataRendaFixa = value;
+    },
+
+    SET_RENDAS_FIXAS(state, value) {
+        state.rendas_fixas = value;
     }
 };
 

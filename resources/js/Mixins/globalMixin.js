@@ -21,10 +21,10 @@ Vue.mixin({
             return valor.toLocaleString('pt-br', { minimumFractionDigits: 2 });
         },
 
-        generateSelectValues(array, key, value) {
+        generateSelectValues(array, key, value, key1=false) {
             return array.map(obj => {
                 return {
-                    key: obj[key],
+                    key: `${obj[key]}${key1 ? `/${obj[key1]}` : ""}`,
                     value: obj[value]
                 };
             });

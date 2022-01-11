@@ -9,6 +9,7 @@
             :step="stepInt ? 1 : 0.1"
             :disabled="disabled"
             :dense="dense"
+            :clearable="clearable"
             type="number"
             outlined
         ></v-text-field>
@@ -49,6 +50,9 @@ export default {
             required: false
         },
         dense: {
+            required: false
+        },
+        clearable: {
             required: false
         }
     },

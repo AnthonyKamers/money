@@ -2,7 +2,8 @@ FROM TABLE despesas_fixas
 
 id
 banco_id
-categoria_id
+categoria_id - nullable
 valor
+descricao
 qtd_mes
-data (nullable)
+dia_mes - int(nullable)
