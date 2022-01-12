@@ -17,4 +17,8 @@ class Cartao extends Model
 
     // Timestamps
     public $timestamps = true;
+
+    public function faturas() {
+        return $this->hasMany(FaturaCartao::class, 'cartao_id', 'id');
+    }
 }

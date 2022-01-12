@@ -126,7 +126,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             commit("SET_API", 'pending');
 
-            payload.instance.axios.get(`${payload.instance.apiUrl}/parcelas/read`, {
+            payload.instance.axios.get(`${payload.instance.apiUrl}/rendas/parcelas/read`, {
                 params: {
                     renda_id: payload.renda_id
                 }
@@ -186,7 +186,7 @@ const actions = {
                 }
             );
         });
-    }
+    },
 };
 
 const mutations = {

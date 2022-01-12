@@ -3,9 +3,10 @@ FROM TABLE cartoes
 id
 banco_id
 nome  (visa/ello grafite)
-tipo  (crédito/débito) [0,1]
+tipo  (débito/crédito) [0,1]
 final (integer (4))
 mensalidade (nullable) - float
 vencimento_fatura (nullable if débito) - integer (2)
+fechamento_fatura - integer(2) -> nullable
 limite (float)
 cor - string

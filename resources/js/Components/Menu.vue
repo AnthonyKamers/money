@@ -1,12 +1,13 @@
 <template>
 	<div class="menu">
 		<ul>Cadastrar
-			<li><router-link to="/bancos">Bancos</router-link></li>
+			<li @click="$router.push({ path: `/bancos` })" class="link">Bancos</li>
 		</ul>
 
 		<div v-if="$store.getters['Bancos/getBancos']">
 			<ul v-for="banco in $store.getters['Bancos/getBancos']" :key="banco.id">
-				<h4 style="margin-bottom: 0;">{{ banco.nome }}</h4>
+				<h4 class="mb-0">{{ banco.nome }}</h4>
+
 				<li @click="$router.push({ path: `/banco/${banco.id}/cartoes` })" class="link">Cartões</li>
 				
 				<li @click="$router.push({ path: `/rendas/${banco.id}/rendas` })" class="link">Rendas (entradas)</li>
@@ -18,13 +19,11 @@
 				<li @click="$router.push({ path: `/despesas/${banco.id}/despesas` })" class="link">Despesas (saídas)</li>
 				<ul>
 					<li @click="$router.push({ path: `/despesas/${banco.id}/categorias` })" class="link">Categorias</li>
-					<li>Despesas fixas</li>
-					<li>Faturas cartões</li>
-					<li>Parcelas à pagar</li>
+					<li @click="$router.push({ path: `/despesas/${banco.id}/despesas-fixas` })" class="link">Despesas fixas</li>
+					<li @click="$router.push({ path: `/despesas/${banco.id}/faturas-cartoes` })" class="link">Faturas cartões</li>
 				</ul>
 
 				<li>Extrato</li>
-				<li>Saldo</li>
 			</ul>
 		</div>
 

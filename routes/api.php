@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BancoController;
 use App\Http\Controllers\CartaoController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\CategoriaRendaController;
 use App\Http\Controllers\CategoriaDespesaController;
 use App\Http\Controllers\RendaController;
 use App\Http\Controllers\DespesaController;
+use App\Http\Controllers\FaturaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +61,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::post('rendas/contabilizar', [RendaController::class, 'contabilizar']);
 
     // parcelas
-    Route::get('parcelas/read', [RendaController::class, 'readParcelas']);
+    Route::get('rendas/parcelas/read', [RendaController::class, 'readParcelas']);
 
     // renda fixa
     Route::get('renda-fixa/read', [RendaController::class, 'readRendaFixa']);
@@ -78,4 +80,15 @@ Route::group(['middleware' => 'auth:api'], function() {
     // CRUD despesas
     Route::get('despesas/read', [DespesaController::class, 'index']);
     Route::post('despesas/create', [DespesaController::class, 'store']);
+
+    // parcelas
+    Route::get('despesas/parcelas/read', [DespesaController::class, 'readParcelas']);
+
+    // despesa fixa
+    Route::get('despesa-fixa/read', [DespesaController::class, 'readDespesaFixa']);
+    Route::get('despesa-fixa/all', [DespesaController::class, 'readDespesaFixaAll']);
+
+    // faturas
+    Route::get('faturas/read', [FaturaController::class, 'index']);
+    Route::get('faturas/show', [FaturaController::class, 'show']);
 });

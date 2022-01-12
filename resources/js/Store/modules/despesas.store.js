@@ -5,6 +5,7 @@ const state = {
 
     parcelas_despesa: null,
     despesa_fixa: null,
+    dataDespesaFixa: null,
 
     despesas_fixas: null
 };
@@ -32,6 +33,10 @@ const getters = {
 
     getDespesaFixa(state) {
         return state.despesa_fixa;
+    },
+
+    getDataDespesaFixa(state) {
+        return state.dataDespesaFixa;
     }
 };
 
@@ -90,7 +95,74 @@ const actions = {
         commit("SET_EDIT_DESPESA", null);
         commit("SET_DESPESA_FIXA", null);
         commit("SET_PARCELAS_DESPESA", null);
-    }
+    },
+
+    // parcelas
+    readParcelas({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            commit("SET_API", 'pending');
+
+            payload.instance.axios.get(`${payload.instance.apiUrl}/despesas/parcelas/read`, {
+                params: {
+                    despesa_id: payload.despesa_id
+                }
+            }).then(
+                response => {
+                    commit("SET_API", 'success');
+                    commit("SET_PARCELAS_DESPESA", response.data);
+                    resolve();
+                },
+                error => {
+                    commit("SET_API", 'error');
+                    reject(error);
+                }
+            );
+        });
+    },
+
+    // despesa fixa
+    readDespesaFixa({ commit }, payload) {
+        return new Promise((resolve, reject) => {
+            commit("SET_API", 'pending');
+
+            payload.instance.axios.get(`${payload.instance.apiUrl}/despesa-fixa/read`, {
+                params: payload.data
+            }).then(
+                response => {
+                    commit("SET_API", 'success');
+                    commit("SET_DATA_DESPESA_FIXA", response.data);
+                    resolve();
+                },
+                error => {
+                    commit("SET_API", 'error');
+                    reject(error);
+                }
+            );
+        });
+    },
+
+    // read despesas fixas all
+    readDespesasFixasAll({ commit, rootGetters }, instance) {
+        return new Promise((resolve, reject) => {
+            commit("SET_API", 'pending');
+
+            instance.axios.get(`${instance.apiUrl}/despesa-fixa/all`, {
+                params: {
+                    banco_id: parseInt(rootGetters["Bancos/getBancoNow"].id)
+                }
+            }).then(
+                response => {
+                    commit("SET_API", 'success');
+                    commit('SET_DESPESAS_FIXAS', response.data);
+                    resolve();
+                },
+                error => {
+                    commit("SET_API", 'error');
+                    reject(error);
+                }
+            );
+        });
+    },
 };
 
 const mutations = {
@@ -116,6 +188,10 @@ const mutations = {
 
     SET_DESPESA_FIXA(state, value) {
         state.despesa_fixa = value;
+    },
+
+    SET_DATA_DESPESA_FIXA(state, value) {
+        state.dataDespesaFixa = value;
     }
 };
 

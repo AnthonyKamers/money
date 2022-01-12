@@ -50,6 +50,7 @@
                         <th class="text-left">Data</th>
                         <th class="text-left">Categoria</th>
                         <th class="text-left">Forma de pagamento</th>
+                        <th class="text-left">Descrição</th>
                         <th class="text-left">Valor</th>
                         <th class="text-left">Parcelado</th>
                         <th class="text-left">Fixa</th>
@@ -58,7 +59,32 @@
                     </tr>
                 </thead>
 
-                <tbody></tbody>
+                <tbody>
+                    <tr v-for="despesa in getDespesas()" :key="despesa.id">
+                        <td><div class="square noCursor" :style="{ backgroundColor: despesa.categoria.cor }"></div></td>
+                        <td>{{ despesa.data | moment("DD/MM/Y") }}</td>
+                        <td>{{ despesa.categoria.nome }}</td>
+                        <td>{{ despesa.forma_pagamento.descricao }}</td>
+                        <td>{{ despesa.descricao }}</td>
+                        <td>{{ convertBrazil(despesa.valor) }}</td>
+
+                        <td v-if="despesa.parcelado">
+                            <router-link :to="`ver-parcelas/${despesa.id}`">Sim</router-link>
+                        </td>
+                        <td v-else>Não</td>
+
+                        <td v-if="despesa.despesa_fixa_id">
+                            <router-link :to="`ver-despesa-fixa/${despesa.despesa_fixa_id}`">Sim</router-link>
+                        </td>
+                        <td v-else>Não</td>
+
+                        <td>{{ booleanConvert(despesa.ja_debitado) }}</td>
+                        <td>
+                            <v-icon>mdi-pencil</v-icon>
+                            <v-icon>mdi-delete</v-icon>
+                        </td>
+                    </tr>
+                </tbody>
             </template>
         </v-simple-table>
     </div>
@@ -102,7 +128,43 @@ export default {
                 busca: ""
             },
         }
-    }
+    },
+
+    methods: {
+        getDespesas() {
+            if (this.$store.getters["Despesas/getDespesas"]) {
+                return this.orderBy(
+                    this.$store.getters["Despesas/getDespesas"]
+                            .filter(el => 
+                                    JSON.stringify(el)
+                                    .toLowerCase()
+                                    .indexOf(this.filtros.busca ? this.filtros.busca.toLowerCase() : "") > -1
+                                    )
+                            .filter(el =>
+                                    this.filtros.dataDe
+                                        ? new Date(el.data).getTime() >= new Date(this.filtros.dataDe).getTime()
+                                        : true
+                                    )
+                            .filter(el =>
+                                    this.filtros.dataAte
+                                        ? new Date(el.data).getTime() <= new Date(this.filtros.dataAte).getTime()
+                                        : true
+                                    )
+                            .filter(el =>
+                                    this.filtros.categoria_id
+                                        ? el.categoria_id == this.filtros.categoria_id
+                                        : true)
+                );
+            }
+        },
+
+        orderBy(rendas) {
+            return rendas.sort((a, b) => {
+                if (new Date(a.data) > new Date(b.data)) return -1;
+                else return 1;
+            });
+        },
+    },
 }
 </script>
 

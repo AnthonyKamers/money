@@ -3,6 +3,8 @@ FROM TABLE despesas_fixas
 id
 banco_id
 categoria_id - nullable
+forma_pagamento_id - int
+cartao_id - nullable
 valor
 descricao
 qtd_mes

@@ -56,6 +56,28 @@
                     @update="despesa.cartao_id = $event"
                 ></Select>
 
+                <InputNumber
+                    v-if="despesa.forma_pagamento_id == 5"
+                    label="Mês fatura"
+                    :rules="ruleRequired"
+                    :value="despesa.mes_fatura"
+                    :min="1"
+                    :max="12"
+                    :stepInt="true"
+                    @update="despesa.mes_fatura = $event"
+                ></InputNumber>
+
+                <InputNumber
+                    v-if="despesa.forma_pagamento_id == 5"
+                    label="Ano fatura"
+                    :rules="ruleRequired"
+                    :value="despesa.ano_fatura"
+                    :min="1999"
+                    :max="2030"
+                    :stepInt="true"
+                    @update="despesa.ano_fatura = $event"
+                ></InputNumber>
+
                 <InputDate
                     label="Data"
                     :rules="ruleRequired"
@@ -116,6 +138,7 @@
         <ParcelasDespesa
             :active="drawerParcelas"
             :valor_total="despesa.valor"
+            :forma_pagamento_id="despesa.forma_pagamento_id"
             @valid="validParcelas = $event"
             @close="drawerParcelas = false"
         ></ParcelasDespesa>
@@ -133,6 +156,7 @@
 import Input from "../../../../Components/Input.vue";
 import Select from "../../../../Components/Select.vue";
 import InputDate from "../../../../Components/InputDate.vue";
+import InputNumber from "../../../../Components/InputNumber.vue";
 import ParcelasDespesa from "./ParcelasDespesa.vue";
 import CadastrarDespesaFixa from "./CadastrarDespesaFixa.vue";
 
@@ -144,7 +168,8 @@ export default {
         Select,
         InputDate,
         ParcelasDespesa,
-        CadastrarDespesaFixa
+        CadastrarDespesaFixa,
+        InputNumber
     },
 
     created() {
@@ -188,7 +213,10 @@ export default {
                 ja_debitado: false,
                 parcelado: false,
 
-                despesa_fixa: false
+                despesa_fixa: false,
+
+                mes_fatura: new Date().getMonth() + 1,
+                ano_fatura: new Date().getFullYear()
             },
 
             despesa: {},

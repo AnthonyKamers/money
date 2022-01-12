@@ -4,5 +4,6 @@ id
 cartao_id
 fatura_id
 despesa_id
-qtd_vezes_now
+
+parcela_now
 valor_parcela

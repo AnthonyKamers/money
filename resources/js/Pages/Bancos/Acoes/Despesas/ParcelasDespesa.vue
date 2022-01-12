@@ -43,6 +43,7 @@
                         ></Input>
 
                         <InputDate
+                            v-if="forma_pagamento_id != 5"
                             label="Data"
                             :rules="ruleRequired"
                             :value="parcela.data"
@@ -50,11 +51,12 @@
                         ></InputDate>
 
                         <Select
+                            v-if="forma_pagamento_id != 5"
                             label="Já em conta"
                             :rules="ruleRequired"
                             :items="itemsBool"
-                            :value="parcela.ja_em_conta"
-                            @update="parcela.ja_em_conta = $event"
+                            :value="parcela.ja_debitado"
+                            @update="parcela.ja_debitado = $event"
                         ></Select>
 
                         <v-col :cols="1">
@@ -105,7 +107,11 @@ export default {
         },
 
         valor_total: {
-            required: false
+            required: true
+        },
+
+        forma_pagamento_id: {
+            required: true
         }
     },
 
@@ -129,7 +135,7 @@ export default {
                 this.parcelas.push({
                     valor: "",
                     data: "",
-                    ja_em_conta: false
+                    ja_debitado: false
                 });
             }
         },
@@ -138,7 +144,7 @@ export default {
             this.parcelas.push({
                 valor: "",
                 data: "",
-                ja_em_conta: false
+                ja_debitado: false
             });
 
             this.qtd_parcelas += 1;

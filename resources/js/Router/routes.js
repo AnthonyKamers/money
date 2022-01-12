@@ -82,8 +82,7 @@ const routes = [
                 }
             },
 
-            // rendas
-            // categorias
+            // categorias rendas
             {
                 path: '/rendas/:banco_id/categorias',
                 name: "Rendas.categorias",
@@ -148,7 +147,7 @@ const routes = [
             },
 
 
-            // despesas
+            // categorias despesas
             {
                 path: '/despesas/:banco_id/categorias',
                 name: "Despesas.categorias",
@@ -181,6 +180,62 @@ const routes = [
                 component: () => import("../Pages/Bancos/Acoes/Despesas/CadastrarDespesa.vue"),
                 meta: {
                     title: "Cadastrar despesa"
+                }
+            },
+
+            // ações despesas
+            {
+                path: '/despesas/:banco_id/ver-parcelas/:despesa_id',
+                name: "Despesas.ver_parcelas",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/VerParcelas.vue"),
+                meta: {
+                    title: "Ver parcelas despesa"
+                }
+            },
+            {
+                path: '/despesas/:banco_id/ver-despesa-fixa/:despesa_fixa_id',
+                name: "Despesas.ver_despesa_fixa",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/VerDespesaFixa.vue"),
+                meta: {
+                    title: "Ver despesa fixa"
+                }
+            },
+
+            // despesa fixa
+            {
+                path: '/despesas/:banco_id/despesas-fixas',
+                name: "Despesas.rendas-fixas",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/DespesasFixas.vue"),
+                meta: {
+                    title: "Despesas fixas"
+                }
+            },
+
+            // faturas cartões
+            {
+                path: '/despesas/:banco_id/faturas-cartoes',
+                name: "Despesas.faturas-cartoes",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/Faturas/FaturasCartoes.vue"),
+                meta: {
+                    title: "Faturas cartões"
+                }
+            },
+            {
+                path: '/despesas/:banco_id/faturas-cartoes/:fatura_id',
+                name: "Despesas.faturas-cartoes.ver-fatura",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/Faturas/VerFatura.vue"),
+                meta: {
+                    title: "Ver fatura"
+                }
+            },
+
+            // parcelas pagar
+            {
+                path: '/despesas/:banco_id/parcelas-pagar',
+                name: "Despesas.parcelas.parcelas-pagar",
+                component: () => import("../Pages/Bancos/Acoes/Despesas/ParcelasPagar.vue"),
+                meta: {
+                    title: "Parcelas à pagar"
                 }
             },
         ]

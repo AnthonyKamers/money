@@ -14,6 +14,7 @@
                         <th class="text-left">Nome/Final</th>
                         <th class="text-left">Tipo</th>
                         <th class="text-left">Vencimento fatura</th>
+                        <th class="text-left">Fechamento fatura</th>
                         <th class="text-left">Mensalidade</th>
                         <th class="text-left">Limite</th>
                         <th class="text-left">Ações</th>
@@ -26,6 +27,7 @@
                         <td>{{ cartao.nome }}/{{ cartao.final }}</td>
                         <td>{{ cartao.tipo == 0 ? 'Débito' : 'Crédito' }}</td>
                         <td>{{ cartao.vencimento_fatura }}</td>
+                        <td>{{ cartao.fechamento_fatura }}</td>
                         <td>{{ convertBrazil(cartao.mensalidade) }}</td>
                         <td>{{ convertBrazil(cartao.limite) }}</td>
                         <td>

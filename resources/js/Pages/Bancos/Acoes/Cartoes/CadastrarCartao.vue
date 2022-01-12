@@ -46,6 +46,15 @@
                     :stepInt="true"
                     @update="cartao.vencimento_fatura = $event"
                 ></InputNumber>
+                <InputNumber
+                    label="Fechamento da fatura"
+                    :rules="ruleRequired"
+                    :value="cartao.fechamento_fatura"
+                    :min="1"
+                    :max="31"
+                    :stepInt="true"
+                    @update="cartao.fechamento_fatura = $event"
+                ></InputNumber>
                 <Input
                     label="Limite"
                     :rules="ruleRequired"
@@ -105,6 +114,7 @@ export default {
                 final: "",
                 mensalidade: "",
                 vencimento_fatura: "",
+                fechamento_fatura: "",
                 cor: "",
                 limite: ""
             },

@@ -23,7 +23,7 @@
                         <td>{{ banco.nome }}</td>
                         <td>{{ banco.agencia }}</td>
                         <td>{{ banco.conta }}</td>
-                        <td>{{ banco.saldo }}</td>
+                        <td>{{ convertBrazil(banco.saldo) }}</td>
                         <td>
                             <v-icon @click="editarBanco(banco)">mdi-pencil</v-icon>
                             <v-icon @click="deleteBanco(banco)">mdi-delete</v-icon>

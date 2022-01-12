@@ -17,4 +17,8 @@ class DespesaFixa extends Model
 
     // Timestamps
     public $timestamps = true;
+
+    public function categoria() {
+        return $this->belongsTo(CategoriaDespesa::class, 'categoria_id', 'id');
+    }
 }

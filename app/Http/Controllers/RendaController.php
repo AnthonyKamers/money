@@ -103,7 +103,7 @@ class RendaController extends Controller
 
             return response()->json('success');
         }
-        else if ($renda['parcelado'] == true) {
+        elseif ($renda['parcelado'] == true) {
             $this->renda_parcelada($renda, $parcelas);
 
             return response()->json('success');
